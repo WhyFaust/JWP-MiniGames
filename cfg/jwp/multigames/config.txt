@@ -1,0 +1,107 @@
+"MultiGames"
+{
+	"limit"		"0" // Сколько раз на карту доступны игры (0 - бесконечно)
+	"cooldown"	"5" // Интервал между минииграми
+	
+	"zombiemod"
+	{
+		"game_name"	"Зомбимод"
+		"mother_zombies"	"2" // Сколько первых зомби
+		"zombie_speed"	"1.3" // Скорость зомби
+		"zombie_knockback"	"1.5" // Отдача зомби
+		"timer_wait_t"	"10" // Время до заражения
+		"timer_wait_ct"	"200" // Время игры после заражения
+		"rules"		"Это игра ЗОМБИ, займите хорошее место чтобы зомби вас не заразили!"
+		"musicAll"	"" // Музыка для проигрования без sound/
+		"ZombieSkin"	"models/player/zombie.mdl" // Модель зомби
+		"ZombieHP"	"7000" // Здоровье у зомби
+		"disabled_plugins"	"vip/VIP_Invis;vip/VIP_BHOP_1_0_1;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs" // Какие плагины необходимо отключить во время игры (максимум 6)
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+		"flags"		"" // Игра доступна только админам с флагом, оставьте пустое поле для всех
+	}
+	"hidenseek"
+	{
+		"game_name"	"Прятки"
+		"timer_wait_t"	"10" // Сколько секунд чтобы спрятаться 120
+		"timer_wait_ct"	"400" // Сколько секунд на поиски
+		"rules"		"Это игра ПРЯТКИ, Террористы прячутся, КТ ищут предметы"
+		"musicAll"	"" // Музыка для проигрования без sound/
+		"max_masks"	"3" // Сколько раз игрок может сменить свою модель (проп-террорист)
+		"missing_penalty"	"2" // Если игрок промахивается, сколько хп снимать ему
+		"slap_penalty"	"0"	// Наносить урон как шлепок или без шлепка
+		"ct_health"	"200" // Сколько хп у КТ
+		"t_health"	"100" // Сколько хп у Т
+		"ct_speed"	"1.2" // Скорость КТ
+		"t_speed"	"1.0" // Скорость Т
+		"disabled_plugins"	"vip/VIP_Invis;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs" // Какие плагины необходимо отключить во время игры (максимум 6)
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+	}
+	"chickenhunt"
+	{
+		"game_name"	"Охота"
+		"timer_wait_t"	"10"
+		"timer_wait_ct"	"400"
+		"rules"		"Это игра Охота, Террористы курицы, КТ - охотники. Задача охотников убить куриц"
+		"rule_1"	"" // Для панельки во время старта миниигры. До 6 штук
+		"rule_2"	"" // Оставьте пустыми чтобы не использовать
+		"rule_3"	""
+		"rule_4"	""
+		"rule_5"	""
+		"rule_6"	""
+		"musicAll"	""
+		"ct_health"	"100"	// Сколько хп у КТ
+		"t_health"	"1"     // Сколько хп у Т
+		"ct_speed"	"1.0" // скорость КТ
+		"t_speed"	"1.2" // скорость Т
+		"ct_gravity"	"1.0" // гравитация КТ
+		"t_gravity"	"0.3" // гравитация Т
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+		"disabled_plugins"	"vip/VIP_Invis;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs"
+	}
+	"zeusdm"
+	{
+		"game_name"	"Zeus DM" // [ONLY FOR CSGO]! Remove if your game not supported
+		"timer_wait_t"	"10"
+		"timer_wait_ct"	"200"
+		"rules"		"Это игра дезматч на зевзах, каждый сам за себя"
+		"rule_1"	"" // Для панельки во время старта миниигры. До 6 штук
+		"rule_2"	"" // Оставьте пустыми чтобы не использовать
+		"rule_3"	""
+		"rule_4"	""
+		"rule_5"	""
+		"rule_6"	""
+		"musicAll"	""
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+		"disabled_plugins"	"vip/VIP_Invis;jwp/jwp_handcuffs;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs"
+	}
+	"hotpotato"
+	{
+		"game_name" "Горячая картошка"
+		"timer_wait_t"	"10" // Время перед началом игры
+		"timer_wait_ct" "20" // каждые 20 секунд появляется новая горячая картошка
+		"rules"	"Это игра горячая картошка, каждые 20с. выбирается игрок и должен передать картошку. Не успеет - умрёт."
+		"potato_speed"	"1.2" // скорость игрока с картошкой
+		"musicAll"	""
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+		"disabled_plugins" "vip/VIP_Invis;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs"
+	}
+	"catchnfree"
+	{
+		"game_name" "Не пойман не вор"
+		"timer_wait_t"	"10" // Время перед началом игры
+		"timer_wait_ct" "200" // время на игру в секундах
+		"timer_catched" "6.0" // количество секунд, которое должно пройти с момента заморозки, по истечении срока игрока могут разморозить
+		"rules"	"Это игра не пойман не вор, через 10с размораживаются КТ. КТ должны заморозить всех Т, Т могут разморозить союзников."
+		"t_speed"	"1.6" // скорость T
+		"ct_speed"	"2.0" // скорость CT
+		"musicAll"	""
+		"cvar_on_game_start" "sm_hosties_lr 0;sm_hosties_lr_autodisplay 0;mp_forcecamera 1" // Квары при запуске игры (будут установлены перед запуском игры). Разделять ";"
+		"cvar_on_game_end" "sm_hosties_lr 1;sm_hosties_lr_autodisplay 1;mp_forcecamera 0" // Квары в конце игры (заполнять как disabled_plugins). Разделять ";"
+		"disabled_plugins" "vip/VIP_Invis;vip/VIP_Gravity_1_2;vip/VIP_Regen_HP_1_1;vip/VIP_Speed_1_1;hl_gangs"
+	}
+}

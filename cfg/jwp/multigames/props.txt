@@ -1,0 +1,277 @@
+"Props"
+{
+	"Коробка"
+	{
+		"model"			"models/props_junk/wood_crate001a.mdl"
+	}
+		
+	"Бочка"
+	{        
+		"model"			"models/props/de_train/Barrel.mdl"
+	}
+	
+	"Мини ящик"
+	{
+		"model"			"models/props/cs_office/file_cabinet1.mdl"
+	}
+	
+	"Тележка"
+	{    
+		"model"			"models/props_junk/Wheebarrow01a.mdl"
+	}
+	
+	"Мусорка"
+	{
+		"model"			"models/props_junk/TrashDumpster01a.mdl"
+	}
+	
+	"Холодильник"
+	{     
+		"model"			"models/props/cs_office/vending_machine.mdl"
+	}
+	
+	"Кондиционер"
+	{    
+		"model"			"models/props/de_train/acunit2.mdl"
+	}
+	
+	"Труп"
+	{      
+		"model"			"models/props/de_train/de_train_securityguard.mdl"
+	}
+	
+	"Книжная полка"
+	{      
+		"model"			"models/props/cs_office/bookshelf1.mdl"
+	}
+	
+	"Большой файловый ящик"
+	{   
+		"model"			"models/props/cs_office/file_cabinet1_group.mdl"
+	}
+	
+	"Железная полка"
+	{      
+		"model"			"models/props/cs_office/shelves_metal1.mdl"
+	}
+	
+	"Диван"
+	{     
+		"model"			"models/props/cs_office/sofa.mdl"
+	}
+	
+	"Кресло"
+	{
+		"model"			"models/props/cs_office/sofa_chair.mdl"
+	}
+	
+	"Деревянный ящик"
+	{       
+		"model"			"models/props/cs_militia/crate_extrasmallmill.mdl"
+	}
+	
+	"Стол"
+	{  
+		"model"			"models/props/cs_italy/it_mkt_table2.mdl"
+	}
+	
+	"Большая книжная полка"
+	{     
+		"model"			"models/props/cs_havana/bookcase_large.mdl"
+	}
+	
+	"Большая пачка денег"
+	{
+		"model"			"models/props/cs_assault/moneypallet.mdl"
+	}
+	
+	"Большая пачка денег #2"
+	{
+		"model"			"models/props/cs_assault/moneypallet02.mdl"
+	}
+	
+	"Большая пачка денег #3"
+	{
+		"model"			"models/props/cs_assault/moneypallet03.mdl"
+	}
+	
+	"Картонная коробка"
+	{   
+		"model"			"models/props/cs_assault/dryer_box.mdl"
+	}
+	
+	"Hand Truck"
+	{   
+		"model"			"models/props/cs_assault/handtruck.mdl"
+	}
+	
+	"Ladder"
+	{   
+		"model"			"models/props/cs_assault/ladderaluminium128.mdl"
+	}
+	
+	"No stop"
+	{   
+		"model"			"models/props/cs_assault/nostopssign.mdl"
+	}
+	
+	"Oxy Torch"
+	{   
+		"model"			"models/props/cs_assault/oxy_torch.mdl"
+	}
+	
+	"Engine Solo"
+	{   
+		"model"			"models/props/cs_assault/engine_solo.mdl"
+	}
+	
+	"Pylon"
+	{   
+		"model"			"models/props/cs_assault/pylon.mdl"
+	}
+	
+	"Ticken Machine"
+	{   
+		"model"			"models/props/cs_assault/ticketmachine.mdl"
+	}
+	
+	"Ventillation Duct"
+	{   
+		"model"			"models/props/cs_assault/ventilationduct01.mdl"
+	}
+	
+	"Wall vent"
+	{   
+		"model"			"models/props/cs_assault/wall_vent.mdl"
+	}
+	
+	"Book case (small)"
+	{   
+		"model"			"models/props/cs_havana/bookcase_small.mdl"
+	}
+	
+	"Lattern"
+	{   
+		"model"			"models/props/cs_italy/it_lantern1.mdl"
+	}
+	
+	"Lattern (off)"
+	{   
+		"model"			"models/props/cs_italy/it_lantern1_off.mdl"
+	}
+	
+	"Lattern #2"
+	{   
+		"model"			"models/props/cs_italy/it_lantern2.mdl"
+	}
+	
+	"Container #1 (empty)"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_container1.mdl"
+	}
+	
+	"Container #1 (filled)"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_container1a.mdl"
+	}
+	
+	"Container #2"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_container2.mdl"
+	}
+	
+	"Container #3 (empty)"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_container3.mdl"
+	}
+	
+	"Container #3 (filled)"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_container3a.mdl"
+	}
+	
+	"Table MKT"
+	{   
+		"model"			"models/props/cs_italy/it_mkt_table2.mdl"
+	}
+	
+	"Street Lamp Leg"
+	{   
+		"model"			"models/props/cs_italy/it_streetlampleg.mdl"
+	}
+	
+	"Market Dolly"
+	{   
+		"model"			"models/props/cs_italy/market_dolly01.mdl"
+	}
+	
+	"Wine Rack (small)"
+	{   
+		"model"			"models/props/cs_italy/winerack_small.mdl"
+	}
+	
+	"Bar Chair"
+	{   
+		"model"			"models/props/cs_militia/barstool01.mdl"
+	}
+	
+	"Case of Beer"
+	{   
+		"model"			"models/props/cs_militia/caseofbeer01.mdl"
+	}
+	
+	"Couch"
+	{   
+		"model"			"models/props/cs_militia/couch.mdl"
+	}
+	
+	"Footlocker (closed)"
+	{   
+		"model"			"models/props/cs_militia/footlocker01_closed.mdl"
+	}
+	
+	"Footlocker (open)"
+	{   
+		"model"			"models/props/cs_militia/footlocker01_open.mdl"
+	}
+	
+	"Logpile"
+	{   
+		"model"			"models/props/cs_militia/logpile2.mdl"
+	}
+	
+	"Microwave"
+	{   
+		"model"			"models/props/cs_militia/microwave01.mdl"
+	}
+	
+	"Newspaper"
+	{   
+		"model"			"models/props/cs_militia/newspaperstack01.mdl"
+	}
+	
+	"Toiler"
+	{   
+		"model"			"models/props/cs_militia/toilet.mdl"
+	}
+	
+	"Vent #1"
+	{   
+		"model"			"models/props/cs_militia/vent01.mdl"
+	}
+	
+	"Chair Office"
+	{   
+		"model"			"models/props/cs_office/chair_office.mdl"
+	}
+	
+	"Fire Extinguisher"
+	{   
+		"model"			"models/props/cs_office/fire_extinguisher.mdl"
+	}
+	
+	"Ladder Office"
+	{   
+		"model"			"models/props/cs_office/ladder_office.mdl"
+	}
+}
