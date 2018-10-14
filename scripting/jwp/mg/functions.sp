@@ -189,3 +189,12 @@ void SetClientSpeed(int client, float speed)
 {
     SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", speed);
 }
+
+int UTIL_FindSendPropInfo(const char[] szClass, const char[] szMember)
+{
+    int iDummy = FindSendPropInfo(szClass, szMember);
+    if (iDummy == -1)
+        SetFailState("Failed to get \"%s:%s\" offset", szClass, szMember);
+
+    return iDummy;
+}

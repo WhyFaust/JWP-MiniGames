@@ -65,20 +65,13 @@ public void OnPluginStart()
 		g_bIsCSGO = true;
 	else g_bIsCSGO = false;
 	
-	g_iClipOffset = FindSendPropInfo("CBaseCombatWeapon", "m_iClip1");
-	g_iAmmoOffset = FindSendPropInfo("CCSPlayer", "m_iAmmo");
-	g_iPrimaryAmmoTypeOffset = FindSendPropInfo("CBaseCombatWeapon", "m_iPrimaryAmmoType");
-	g_iActiveWeaponOffset = FindSendPropInfo("CCSPlayer", "m_hActiveWeapon");
-	
-	if (g_iClipOffset == -1)
-		SetFailState("Failed to get m_iClip1 offset");
-	else if (g_iAmmoOffset == -1)
-		SetFailState("Failed to get m_iAmmo offset");
-	else if (g_iPrimaryAmmoTypeOffset == -1)
-		SetFailState("Failed to get m_iPrimaryAmmoType offset");
-	else if (g_iActiveWeaponOffset == -1)
-		SetFailState("Failed to get m_hActiveWeapon offset");
-	
+	g_iClipOffset             = UTIL_FindSendPropInfo("CBaseCombatWeapon",  "m_iClip1");
+	g_iPrimaryAmmoTypeOffset  = UTIL_FindSendPropInfo("CBaseCombatWeapon",  "m_iPrimaryAmmoType");
+	g_iAmmoOffset             = UTIL_FindSendPropInfo("CCSPlayer",          "m_iAmmo");
+	g_iActiveWeaponOffset     = UTIL_FindSendPropInfo("CCSPlayer",          "m_hActiveWeapon");
+	g_CollisionGroupOffset    = UTIL_FindSendPropInfo("CBaseEntity",        "m_CollisionGroup");
+	g_iToolsVelocity          = UTIL_FindSendPropInfo("CBasePlayer",        "m_vecVelocity[0]");
+
 	CvarInitialization();
 	MenuInitialization();
 	ReadGameModeConfigs();
@@ -94,24 +87,7 @@ public void OnPluginStart()
 			OnClientPutInServer(i);
 	}
 	
-	g_CollisionGroupOffset = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
-	if (g_CollisionGroupOffset == -1)
-			LogError("CBaseEntity::m_CollisionGroup offset not found");
-	
 	if (JWP_IsStarted()) JWP_Started();
-}
-
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
-{
-	g_iToolsVelocity = FindSendPropInfo("CBasePlayer", "m_vecVelocity[0]");
-	
-	if (g_iToolsVelocity == -1)
-	{
-		strcopy(error, err_max, "Offset \"CBasePlayer::m_vecVelocity[0]\" was not found.");
-		return APLRes_Failure;
-	}
-	
-	return APLRes_Success;
 }
 
 public void OnMapStart()
