@@ -2,8 +2,8 @@
 
 ### Requirements
 - SourceMod 1.7.3 and higher
-- Jail-Warden-Pro(https://github.com/TiBarification/Jail-Warden-Pro)
-- CSGO-ArmsFix(https://github.com/Kxnrl/CSGO-ArmsFix)
+- [Jail-Warden-Pro](https://github.com/TiBarification/Jail-Warden-Pro)
+- [CSGO-ArmsFix](https://github.com/Kxnrl/CSGO-ArmsFix)
 
 ### Install
 - Unpack the archive.
