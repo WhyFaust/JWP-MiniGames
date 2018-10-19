@@ -25,6 +25,7 @@ bool g_bEnabled;
 
 char g_cGameName[32], g_cGameRules[192], g_cMusicAll[PLATFORM_MAX_PATH];
 int g_iWaitTimerT, g_iWaitTimerCT;
+bool g_bBlockLR;
 KeyValues g_KvConfig;
 
 // Menu restrictions
@@ -185,10 +186,13 @@ public Action Listener_LRCommand(int client, int args)
 {
 	if (g_iGameMode != -1)
 	{
-		if (client && IsClientInGame(client))
+		if (g_bBlockLR)
 		{
-			ReplyToCommand(client, "LR недоступен во время миниигр");
-			return Plugin_Stop;
+			if (client && IsClientInGame(client))
+			{
+				ReplyToCommand(client, "LR недоступен во время миниигр");
+				return Plugin_Stop;
+			}
 		}
 	}
 	return Plugin_Continue;
