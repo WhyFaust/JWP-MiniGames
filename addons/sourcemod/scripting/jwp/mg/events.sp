@@ -173,8 +173,11 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		ExecuteServerCommand(g_aDisabledPlugins, true, true);
 		ExecuteServerCommand(g_aOnGameStart, false, true);
 		
-		if (g_CvarLastRequest != null)
-			g_CvarLastRequest.SetInt(0, false, true); // Disable last request while game is running
+		if (g_bBlockLR)
+		{
+			if (g_CvarLastRequest != null)
+				g_CvarLastRequest.SetInt(0, false, true); // Disable last request while game is running
+		}
 		
 		
 		// For some games change cvars
@@ -200,9 +203,12 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		ExecuteServerCommand(g_aDisabledPlugins, true, false);
 		ExecuteServerCommand(g_aOnGameEnd, false, false);
 		
-		if (g_CvarLastRequest != null)
+		if (g_bBlockLR)
 		{
-			g_CvarLastRequest.SetInt(1, false, true); // Enable last request while game is running
+			if (g_CvarLastRequest != null)
+			{
+				g_CvarLastRequest.SetInt(1, false, true); // Enable last request while game is running
+			}
 		}
 		
 		g_KvConfig.Rewind();
