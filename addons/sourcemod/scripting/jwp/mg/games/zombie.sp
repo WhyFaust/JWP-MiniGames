@@ -3,6 +3,7 @@ int gZombie_Health;
 float gZombie_fSpawnCoords[MAXPLAYERS+1][3];
 float gZombie_fKnockback;
 char gZombie_Model[PLATFORM_MAX_PATH];
+char gZombie_ModelArms[PLATFORM_MAX_PATH];
 bool gZombie_IsZombie[MAXPLAYERS+1];
 
 #define CSGO_KNOCKBACK_BOOST        251.0
@@ -30,6 +31,9 @@ void ProcessZombie()
 	
 	g_KvConfig.GetString("ZombieSkin", gZombie_Model, sizeof(gZombie_Model), "");
 	PrecacheModel(gZombie_Model);
+	g_KvConfig.GetString("ZombieArms", gZombie_ModelArms, sizeof(gZombie_ModelArms), "");
+	PrecacheModel(gZombie_ModelArms);
+	
 	gZombie_fKnockback = g_KvConfig.GetFloat("zombie_knockback", 1.0);
 	
 	if (g_iWaitTimerT < 3)
@@ -154,6 +158,11 @@ void InfectPlayer(int client, bool first_infection = true)
 	
 	if (gZombie_Model[0] == 'm' && IsModelPrecached(gZombie_Model))
 		SetEntityModel(client, gZombie_Model);
+	if (gZombie_ModelArms[0] == 'm' && IsModelPrecached(gZombie_ModelArms))
+		if (ArmsFix_ModelSafe(client))
+		{
+			SetEntPropString(client, Prop_Send, "m_szArmsModel", gZombie_ModelArms);
+		}
 	CS_SwitchTeam(client, CS_TEAM_T);
 	
 	SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", g_KvConfig.GetFloat("zombie_speed", 1.2));
@@ -221,4 +230,18 @@ stock void ClientVelocity(int client, float vecVelocity[3], bool apply = true, b
 	}
 
 	TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, vecVelocity);
+}
+
+public Action ArmsFix_OnSpawnModel(int client, char[] model, int modelLen, char[] arms, int armsLen)
+{
+	if (!gZombie_IsZombie[client])
+		return Plugin_Continue;
+		
+	if (GetClientTeam(client) == CS_TEAM_CT)
+	{
+		strcopy(model, modelLen, gZombie_Model);
+		strcopy(arms, armsLen, gZombie_ModelArms);
+		return Plugin_Changed;
+	}
+	return Plugin_Continue;
 }

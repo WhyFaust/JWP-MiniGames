@@ -2,10 +2,14 @@
 #include <sdktools>
 #include <sdkhooks>
 #include <cstrike>
-#include <jwp>
 #include <emitsoundany>
+
+#undef REQUIRE_PLUGIN
+#include <jwp>
 #include <hosties>
 #include <lastrequest>
+#include <armsfix>
+#define REQUIRE_PLUGIN
 
 // Force 1.7 syntax
 #pragma newdecls required
