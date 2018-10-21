@@ -25,7 +25,7 @@ bool g_bEnabled;
 
 char g_cGameName[32], g_cGameRules[192], g_cMusicAll[PLATFORM_MAX_PATH];
 int g_iWaitTimerT, g_iWaitTimerCT;
-bool g_bBlockLR;
+int g_iBlockLR;
 KeyValues g_KvConfig;
 
 // Menu restrictions
@@ -186,7 +186,7 @@ public Action Listener_LRCommand(int client, int args)
 {
 	if (g_iGameMode != -1)
 	{
-		if (g_bBlockLR)
+		if (g_iBlockLR)
 		{
 			if (client && IsClientInGame(client))
 			{

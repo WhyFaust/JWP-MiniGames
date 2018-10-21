@@ -173,7 +173,7 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		ExecuteServerCommand(g_aDisabledPlugins, true, true);
 		ExecuteServerCommand(g_aOnGameStart, false, true);
 		
-		if (g_bBlockLR)
+		if (g_iBlockLR)
 		{
 			if (g_CvarLastRequest != null)
 				g_CvarLastRequest.SetInt(0, false, true); // Disable last request while game is running
@@ -203,7 +203,7 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		ExecuteServerCommand(g_aDisabledPlugins, true, false);
 		ExecuteServerCommand(g_aOnGameEnd, false, false);
 		
-		if (g_bBlockLR)
+		if (g_iBlockLR)
 		{
 			if (g_CvarLastRequest != null)
 			{
@@ -613,24 +613,5 @@ public int pRules_Callback(Menu menu, MenuAction action, int param1, int param2)
 	switch (action)
 	{
 		case MenuAction_End: delete menu;
-	}
-}
-
-public int OnAvailableLR(int announce)
-{
-	if (g_iGameMode == -1)
-	{
-		// Disable searching for a new warden
-		g_bEnabled = false;
-		// announce just notify that LR is available and can be disabled
-		// At first we remove zam and after warden
-		JWP_SetZamWarden(0);
-		JWP_SetWarden(0);
-		// Then we remove all freeday players
-		for (int i = 1; i <= MaxClients; ++i)
-		{
-			if (IsClientInGame(i) && JWP_PrisonerHasFreeday(i))
-				JWP_PrisonerSetFreeday(i, false);
-		}
 	}
 }

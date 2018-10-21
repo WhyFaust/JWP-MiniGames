@@ -50,7 +50,7 @@ void ReadGameModeConfigs()
 		g_iCoolDown = g_KvConfig.GetNum("cooldown", 3);
 		if (g_iCoolDown < 0) g_iCoolDown = 0;
 
-		g_bBlockLR = g_KvConfig.GetNum("blocklr", 1);
+		g_iBlockLR = g_KvConfig.GetNum("blocklr", 1);
 		
 		do
 		{
