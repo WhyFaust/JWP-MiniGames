@@ -1,4 +1,6 @@
 float g_flCTGravity, g_flTGravity;
+char gHunter_Model[PLATFORM_MAX_PATH];
+char gHunter_ModelArms[PLATFORM_MAX_PATH];
 
 void ProcessChickenHunt()
 {
@@ -21,6 +23,11 @@ void ProcessChickenHunt()
 	g_flCTGravity = g_KvConfig.GetFloat("ct_gravity", 0.3);
 	if (g_flCTGravity <= 0) g_flCTGravity = 0.1;
 	
+	g_KvConfig.GetString("HunterSkin", gHunter_Model, sizeof(gHunter_Model), "");
+	PrecacheModel(gHunter_Model);
+	g_KvConfig.GetString("HunterArms", gHunter_ModelArms, sizeof(gHunter_ModelArms), "");
+	PrecacheModel(gHunter_ModelArms);
+	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
 		if (IsClientInGame(i) && IsPlayerAlive(i))
@@ -37,6 +44,13 @@ void ProcessChickenHunt()
 			else if (GetClientTeam(i) == CS_TEAM_CT)
 			{
 				SetEntityHealth(i, ct_health);
+				if (gHunter_Model[0] == 'm' && IsModelPrecached(gHunter_Model))
+					SetEntityModel(i, gHunter_Model);
+				if (gHunter_ModelArms[0] == 'm' && IsModelPrecached(gHunter_ModelArms))
+					if (ArmsFix_ModelSafe(i))
+					{
+						SetEntPropString(i, Prop_Send, "m_szArmsModel", gHunter_ModelArms);
+					}
 				SetEntityMoveType(i, MOVETYPE_NONE);
 				TeleportEntity(i, NULL_VECTOR, NULL_VECTOR, NULL_VELOCITY);
 				SetClientSpeed(i, g_flCTSpeed);

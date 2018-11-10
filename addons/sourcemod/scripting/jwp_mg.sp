@@ -6,6 +6,7 @@
 
 #undef REQUIRE_PLUGIN
 #include <jwp>
+#include <jwp_mg>
 #include <hosties>
 #include <lastrequest>
 #include <armsfix>
@@ -17,16 +18,19 @@
 #define PLUGIN_VERSION "1.0"
 #define ITEM "mg"
 
+#define LOG_PATH "addons/sourcemod/logs/JWP_MG_Log.log"
+
 bool g_bIsCSGO;
 
 int g_iGameMode = -1, g_iGameId = -1;
 bool g_bIsGameRunning = false;
-bool g_bEnabled;
 
 char g_cGameName[32], g_cGameRules[192], g_cMusicAll[PLATFORM_MAX_PATH];
 int g_iWaitTimerT, g_iWaitTimerCT;
 int g_iBlockLR;
 KeyValues g_KvConfig;
+
+Handle	g_fwdMiniGameStart, g_fwdMiniGameEnd;
 
 // Menu restrictions
 int g_iMapLimit, g_iMapLimitCounter;
@@ -94,6 +98,34 @@ public void OnPluginStart()
 	
 	if (JWP_IsStarted()) JWP_Started();
 }
+
+public APLRes AskPluginLoad2(Handle hMyself, bool bLate, char[] sError, int iErr_max) 
+{
+	g_fwdMiniGameStart = CreateGlobalForward("JWP_MG_GameStart", ET_Ignore, Param_Cell);
+	g_fwdMiniGameEnd = CreateGlobalForward("JWP_MG_GameEnd", ET_Ignore, Param_Cell);
+	
+	
+	//CreateNative("JWP_MG_GetGame", Native_JWP_MG_GetGame);
+	
+	RegPluginLibrary("jwp_mg");
+   
+    return APLRes_Success; // Для продолжения загрузки плагина нужно вернуть APLRes_Success
+}
+
+public int Native_JWP_MG_GetGame(Handle plugin, int numParams)
+{
+	return g_iGameMode;
+}
+
+/*
+bool Forward_MiniGameStart()
+{
+	Call_StartForward(g_fwdMiniGameStart);
+	if (Call_Finish(g_iGameMode != -1) != SP_ERROR_NONE)
+		LogToFile(LOG_PATH, "Forward_MiniGameStart error");
+	
+	return g_iGameMode != -1;
+}*/
 
 public void OnMapStart()
 {

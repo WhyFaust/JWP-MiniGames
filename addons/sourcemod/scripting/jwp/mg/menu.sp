@@ -119,21 +119,6 @@ public int g_PropsMenu_Callback(Menu menu, MenuAction action, int param1, int pa
 	}
 }
 
-/* OFFLINE WARDEN IF GAME IS RUNNING */
-public bool JWP_OnWardenChoosing()
-{
-	return g_bEnabled;
-
-	//if (g_bIsGameRunning || g_iGameMode != -1) return false;
-	//return true;
-}
-
-public void JWP_OnWardenChosen(int client)
-{
-	if (g_bIsGameRunning || g_iGameMode != -1 && JWP_GetWarden() > 0)
-		JWP_SetWarden(0);
-}
-
 /* Working with menu in Jail Warden Pro */
 
 public void JWP_Started()

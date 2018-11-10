@@ -231,17 +231,3 @@ stock void ClientVelocity(int client, float vecVelocity[3], bool apply = true, b
 
 	TeleportEntity(client, NULL_VECTOR, NULL_VECTOR, vecVelocity);
 }
-
-public Action ArmsFix_OnSpawnModel(int client, char[] model, int modelLen, char[] arms, int armsLen)
-{
-	if (!gZombie_IsZombie[client])
-		return Plugin_Continue;
-		
-	if (GetClientTeam(client) == CS_TEAM_CT)
-	{
-		strcopy(model, modelLen, gZombie_Model);
-		strcopy(arms, armsLen, gZombie_ModelArms);
-		return Plugin_Changed;
-	}
-	return Plugin_Continue;
-}

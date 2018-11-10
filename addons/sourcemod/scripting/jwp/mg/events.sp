@@ -63,13 +63,6 @@ public void Event_OnRoundStart(Event event, const char[] name, bool silent)
 	}
 	if (g_bIsGameRunning || g_iGameMode != -1)
 	{
-		g_bEnabled = false;
-		// At first we remove zam and after warden
-		JWP_SetZamWarden(0);
-		JWP_SetWarden(0);
-		
-		JWP_ActionMsgAll("\x02Во время игровых дней командир не доступен!");
-		
 		g_bGamePassed = true;
 		
 		Panel p_rules;
@@ -105,6 +98,9 @@ public void Event_OnRoundStart(Event event, const char[] name, bool silent)
 		g_iGameMode = g_iGameId;
 		g_iGameId = -1;
 		g_bIsGameRunning = true;
+		
+		Call_StartForward(g_fwdMiniGameStart);
+		Call_Finish();
 		
 		PrintToChatAll("%s", g_cGameRules); // Print rules to all chat
 		
@@ -199,6 +195,9 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		g_iGameMode = -1;
 		g_bIsGameRunning = false;
 		
+		Call_StartForward(g_fwdMiniGameEnd);
+		Call_Finish();
+		
 		// Enable disabled plugins
 		ExecuteServerCommand(g_aDisabledPlugins, true, false);
 		ExecuteServerCommand(g_aOnGameEnd, false, false);
@@ -222,8 +221,6 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 			}
 		}
 	}
-
-	g_bEnabled = true;
 }
 
 void ExecuteServerCommand(ArrayList &array, bool isPlugin, bool onGameStart)
@@ -614,4 +611,36 @@ public int pRules_Callback(Menu menu, MenuAction action, int param1, int param2)
 	{
 		case MenuAction_End: delete menu;
 	}
+}
+
+public Action ArmsFix_OnSpawnModel(int client, char[] model, int modelLen, char[] arms, int armsLen)
+{
+	if (g_iGameMode == zombiemod)
+	{
+		if (!gZombie_IsZombie[client])
+			return Plugin_Continue;
+			
+		if (GetClientTeam(client) == CS_TEAM_CT)
+		{
+			strcopy(model, modelLen, gZombie_Model);
+			strcopy(arms, armsLen, gZombie_ModelArms);
+			return Plugin_Changed;
+		}
+	}
+	else if (g_iGameMode == chickenhunt)
+	{
+		if (GetClientTeam(client) == CS_TEAM_T)
+		{
+			strcopy(model, modelLen, "models/chicken/chicken.mdl");
+			return Plugin_Changed;
+		}
+		else if (GetClientTeam(client) == CS_TEAM_CT)
+		{
+			strcopy(model, modelLen, gHunter_Model);
+			strcopy(arms, armsLen, gHunter_ModelArms);
+			return Plugin_Changed;
+		}
+	}
+	
+	return Plugin_Continue;
 }
