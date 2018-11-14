@@ -31,8 +31,11 @@ void ProcessZombie()
 	
 	g_KvConfig.GetString("ZombieSkin", gZombie_Model, sizeof(gZombie_Model), "");
 	PrecacheModel(gZombie_Model);
-	g_KvConfig.GetString("ZombieArms", gZombie_ModelArms, sizeof(gZombie_ModelArms), "");
-	PrecacheModel(gZombie_ModelArms);
+	if(g_bIsCSGO)
+	{
+		g_KvConfig.GetString("ZombieArms", gZombie_ModelArms, sizeof(gZombie_ModelArms), "");
+		PrecacheModel(gZombie_ModelArms);
+	}
 	
 	gZombie_fKnockback = g_KvConfig.GetFloat("zombie_knockback", 1.0);
 	
@@ -158,11 +161,9 @@ void InfectPlayer(int client, bool first_infection = true)
 	
 	if (gZombie_Model[0] == 'm' && IsModelPrecached(gZombie_Model))
 		SetEntityModel(client, gZombie_Model);
-	if (gZombie_ModelArms[0] == 'm' && IsModelPrecached(gZombie_ModelArms))
-		if (ArmsFix_ModelSafe(client))
-		{
+	if(g_bIsCSGO)
+		if (gZombie_ModelArms[0] == 'm' && IsModelPrecached(gZombie_ModelArms))
 			SetEntPropString(client, Prop_Send, "m_szArmsModel", gZombie_ModelArms);
-		}
 	CS_SwitchTeam(client, CS_TEAM_T);
 	
 	SetEntPropFloat(client, Prop_Data, "m_flLaggedMovementValue", g_KvConfig.GetFloat("zombie_speed", 1.2));

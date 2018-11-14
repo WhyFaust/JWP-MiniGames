@@ -25,8 +25,11 @@ void ProcessChickenHunt()
 	
 	g_KvConfig.GetString("HunterSkin", gHunter_Model, sizeof(gHunter_Model), "");
 	PrecacheModel(gHunter_Model);
-	g_KvConfig.GetString("HunterArms", gHunter_ModelArms, sizeof(gHunter_ModelArms), "");
-	PrecacheModel(gHunter_ModelArms);
+	if(g_bIsCSGO)
+	{
+		g_KvConfig.GetString("HunterArms", gHunter_ModelArms, sizeof(gHunter_ModelArms), "");
+		PrecacheModel(gHunter_ModelArms);
+	}
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
@@ -46,11 +49,9 @@ void ProcessChickenHunt()
 				SetEntityHealth(i, ct_health);
 				if (gHunter_Model[0] == 'm' && IsModelPrecached(gHunter_Model))
 					SetEntityModel(i, gHunter_Model);
-				if (gHunter_ModelArms[0] == 'm' && IsModelPrecached(gHunter_ModelArms))
-					if (ArmsFix_ModelSafe(i))
-					{
+				if(g_bIsCSGO)
+					if (gHunter_ModelArms[0] == 'm' && IsModelPrecached(gHunter_ModelArms))
 						SetEntPropString(i, Prop_Send, "m_szArmsModel", gHunter_ModelArms);
-					}
 				SetEntityMoveType(i, MOVETYPE_NONE);
 				TeleportEntity(i, NULL_VECTOR, NULL_VECTOR, NULL_VELOCITY);
 				SetClientSpeed(i, g_flCTSpeed);

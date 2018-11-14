@@ -612,35 +612,3 @@ public int pRules_Callback(Menu menu, MenuAction action, int param1, int param2)
 		case MenuAction_End: delete menu;
 	}
 }
-
-public Action ArmsFix_OnSpawnModel(int client, char[] model, int modelLen, char[] arms, int armsLen)
-{
-	if (g_iGameMode == zombiemod)
-	{
-		if (!gZombie_IsZombie[client])
-			return Plugin_Continue;
-			
-		if (GetClientTeam(client) == CS_TEAM_CT)
-		{
-			strcopy(model, modelLen, gZombie_Model);
-			strcopy(arms, armsLen, gZombie_ModelArms);
-			return Plugin_Changed;
-		}
-	}
-	else if (g_iGameMode == chickenhunt)
-	{
-		if (GetClientTeam(client) == CS_TEAM_T)
-		{
-			strcopy(model, modelLen, "models/chicken/chicken.mdl");
-			return Plugin_Changed;
-		}
-		else if (GetClientTeam(client) == CS_TEAM_CT)
-		{
-			strcopy(model, modelLen, gHunter_Model);
-			strcopy(arms, armsLen, gHunter_ModelArms);
-			return Plugin_Changed;
-		}
-	}
-	
-	return Plugin_Continue;
-}

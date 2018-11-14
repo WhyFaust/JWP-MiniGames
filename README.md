@@ -3,7 +3,6 @@
 ### Requirements
 - SourceMod 1.7.3 and higher
 - [Jail-Warden-Pro](https://github.com/TiBarification/Jail-Warden-Pro)
-- [CSGO-ArmsFix](https://github.com/Kxnrl/CSGO-ArmsFix)
 - [SM_Hosties](https://github.com/dataviruset/sm-hosties)
 
 ### Install

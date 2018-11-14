@@ -9,13 +9,12 @@
 #include <jwp_mg>
 #include <hosties>
 #include <lastrequest>
-#include <armsfix>
 #define REQUIRE_PLUGIN
 
 // Force 1.7 syntax
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.4"
+#define PLUGIN_VERSION "1.5"
 #define ITEM "mg"
 
 #define LOG_PATH "addons/sourcemod/logs/JWP_MG_Log.log"
