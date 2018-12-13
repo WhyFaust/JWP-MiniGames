@@ -36,6 +36,14 @@ public int JWP_MG_GameEnd()
 	JWP_ActionMsgAll("КМД снова доступен");
 }
 
+public void OnMapStart()
+{
+	if(!g_bEnabled)
+	{
+		g_bEnabled = true;
+	}
+}
+
 public bool JWP_OnWardenChoosing()
 {
 	return g_bEnabled;
