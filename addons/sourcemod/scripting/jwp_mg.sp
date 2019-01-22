@@ -73,12 +73,12 @@ public void OnPluginStart()
 		g_bIsCSGO = true;
 	else g_bIsCSGO = false;
 	
-	g_iClipOffset             = UTIL_FindSendPropInfo("CBaseCombatWeapon",  "m_iClip1");
-	g_iPrimaryAmmoTypeOffset  = UTIL_FindSendPropInfo("CBaseCombatWeapon",  "m_iPrimaryAmmoType");
-	g_iAmmoOffset             = UTIL_FindSendPropInfo("CCSPlayer",          "m_iAmmo");
-	g_iActiveWeaponOffset     = UTIL_FindSendPropInfo("CCSPlayer",          "m_hActiveWeapon");
-	g_CollisionGroupOffset    = UTIL_FindSendPropInfo("CBaseEntity",        "m_CollisionGroup");
-	g_iToolsVelocity          = UTIL_FindSendPropInfo("CBasePlayer",        "m_vecVelocity[0]");
+	g_iClipOffset			  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iClip1");
+	g_iPrimaryAmmoTypeOffset  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iPrimaryAmmoType");
+	g_iAmmoOffset			  = UTIL_FindSendPropInfo("CCSPlayer",			"m_iAmmo");
+	g_iActiveWeaponOffset	  = UTIL_FindSendPropInfo("CCSPlayer",			"m_hActiveWeapon");
+	g_CollisionGroupOffset	  = UTIL_FindSendPropInfo("CBaseEntity",		"m_CollisionGroup");
+	g_iToolsVelocity		  = UTIL_FindSendPropInfo("CBasePlayer",		"m_vecVelocity[0]");
 
 	CvarInitialization();
 	MenuInitialization();
@@ -107,8 +107,8 @@ public APLRes AskPluginLoad2(Handle hMyself, bool bLate, char[] sError, int iErr
 	//CreateNative("JWP_MG_GetGame", Native_JWP_MG_GetGame);
 	
 	RegPluginLibrary("jwp_mg");
-   
-    return APLRes_Success; // Для продолжения загрузки плагина нужно вернуть APLRes_Success
+
+	return APLRes_Success; // Для продолжения загрузки плагина нужно вернуть APLRes_Success
 }
 
 public int Native_JWP_MG_GetGame(Handle plugin, int numParams)

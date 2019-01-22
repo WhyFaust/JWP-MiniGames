@@ -30,11 +30,13 @@ void ProcessZombie()
 		gZombie_Health = 5000;
 	
 	g_KvConfig.GetString("ZombieSkin", gZombie_Model, sizeof(gZombie_Model), "");
-	PrecacheModel(gZombie_Model);
+	if (FileExists(gZombie_Model))
+		PrecacheModel(gZombie_Model);
 	if(g_bIsCSGO)
 	{
 		g_KvConfig.GetString("ZombieArms", gZombie_ModelArms, sizeof(gZombie_ModelArms), "");
-		PrecacheModel(gZombie_ModelArms);
+		if (FileExists(gZombie_ModelArms))
+			PrecacheModel(gZombie_ModelArms);
 	}
 	
 	gZombie_fKnockback = g_KvConfig.GetFloat("zombie_knockback", 1.0);
@@ -159,10 +161,10 @@ void InfectPlayer(int client, bool first_infection = true)
 	GiveWpn(client, "weapon_knife");
 	SetEntityHealth(client, gZombie_Health);
 	
-	if (gZombie_Model[0] == 'm' && IsModelPrecached(gZombie_Model))
+	if (FileExists(gZombie_Model) && IsModelPrecached(gZombie_Model))
 		SetEntityModel(client, gZombie_Model);
 	if(g_bIsCSGO)
-		if (gZombie_ModelArms[0] == 'm' && IsModelPrecached(gZombie_ModelArms))
+		if (FileExists(gZombie_ModelArms) && IsModelPrecached(gZombie_ModelArms))
 			SetEntPropString(client, Prop_Send, "m_szArmsModel", gZombie_ModelArms);
 	CS_SwitchTeam(client, CS_TEAM_T);
 	
