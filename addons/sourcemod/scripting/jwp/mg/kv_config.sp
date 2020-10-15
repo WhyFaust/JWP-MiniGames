@@ -33,10 +33,10 @@ void ReadGameModeConfigs()
 	g_aDisabledPlugins = new ArrayList(48);
 	
 	g_aMusicList = new ArrayList(PLATFORM_MAX_PATH);
-	g_KvConfig = new KeyValues("MultiGames");
+	g_KvConfig = new KeyValues("MiniGames");
 	
 	char cGameName[PLATFORM_MAX_PATH];
-	char cPath[] = "cfg/jwp/multigames/config.txt";
+	char cPath[] = "cfg/jwp/minigames/config.txt";
 	if (!g_KvConfig.ImportFromFile(cPath))
 		SetFailState("Couldn't parse file %s", cPath);
 	
@@ -93,8 +93,8 @@ void PrecacheMusic()
 void LoadPropsFromFile()
 {
 	KeyValues kv = new KeyValues("Props");
-	if (!kv.ImportFromFile("cfg/jwp/multigames/props.txt"))
-		SetFailState("Couldn't parse file cfg/jwp/multigames/props.txt");
+	if (!kv.ImportFromFile("cfg/jwp/minigames/props.txt"))
+		SetFailState("Couldn't parse file cfg/jwp/minigames/props.txt");
 	
 	char path[PLATFORM_MAX_PATH], name[32];
 	if (kv.GotoFirstSubKey(true))

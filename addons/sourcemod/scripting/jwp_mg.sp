@@ -48,7 +48,7 @@ int g_iClipOffset, g_iAmmoOffset, g_iPrimaryAmmoTypeOffset, g_iActiveWeaponOffse
 
 public Plugin myinfo =
 {
-	name = "[JWP] MultiGames",
+	name = "[JWP] MiniGames",
 	description = "Minigames for Jail Warden Pro",
 	author = "White Wolf, BaFeR",
 	version = PLUGIN_VERSION,
