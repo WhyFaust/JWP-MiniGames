@@ -13,7 +13,7 @@ void ProcessZombie()
 {
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && GetClientTeam(i) > CS_TEAM_SPECTATOR)
+		if (IsValidClient(i) && GetClientTeam(i) > CS_TEAM_SPECTATOR)
 		{
 			// Temp godmode before round begin
 			if (IsPlayerAlive(i))
@@ -53,7 +53,7 @@ public Action Timer_ProcessZombieStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				pl_count++;
 		}
 		
@@ -81,7 +81,7 @@ public Action Timer_ProcessZombieStart(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			// Remove god mode
 			GodMode(i, false);
@@ -113,7 +113,7 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 		
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && GetClientTeam(i) == CS_TEAM_CT && IsPlayerAlive(i))
+			if (IsValidClient(i) && GetClientTeam(i) == CS_TEAM_CT && IsPlayerAlive(i))
 				pl_count++;
 		}
 		
@@ -133,7 +133,7 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 		PrintToChatAll("\x01[\x02ZombieMod\x01] \x03Зомби проиграли, они не успели заразить всех людей");
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i) && (GetClientTeam(i) == CS_TEAM_T))
+			if (IsValidClient(i, _, false) && (GetClientTeam(i) == CS_TEAM_T))
 				ForcePlayerSuicide(i);
 		}
 	}
@@ -175,7 +175,7 @@ void StopZombie()
 {
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && GetClientTeam(i) > CS_TEAM_SPECTATOR)
+		if (IsValidClient(i) && GetClientTeam(i) > CS_TEAM_SPECTATOR)
 			CS_SwitchTeam(i, gZombie_iClientTeam[i]);
 		gZombie_IsZombie[i] = false;
 	}

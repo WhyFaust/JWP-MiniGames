@@ -35,7 +35,7 @@ void ProcessChickenHunt()
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			if (GetClientTeam(i) == CS_TEAM_T)
 			{
@@ -74,7 +74,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				pl_count++;
 		}
 		
@@ -84,7 +84,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
 			for (int i = 1; i <= MaxClients; ++i)
 			{
-				if (IsClientInGame(i))
+				if (IsValidClient(i))
 				{
 					SetClientSpeed(i, 1.0);
 					SetEntityGravity(i, 1.0);
@@ -104,7 +104,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i) && GetClientTeam(i) == CS_TEAM_CT)
+			if (IsValidClient(i, _, false) && GetClientTeam(i) == CS_TEAM_CT)
 			{
 				TeleportEntity(i, NULL_VECTOR, NULL_VECTOR, NULL_VELOCITY);
 				SetEntityMoveType(i, MOVETYPE_WALK);
@@ -129,14 +129,14 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 		if (g_iWaitTimerCT % 5 == 0)
 		{
 			int randpl = GetRandomInt(1, MaxClients);
-			if (IsClientInGame(randpl) && GetClientTeam(randpl) == CS_TEAM_T && IsPlayerAlive(randpl))
+			if (IsValidClient(randpl) && GetClientTeam(randpl) == CS_TEAM_T && IsPlayerAlive(randpl))
 			{
 				EmitSoundToAllAny("tib/curlik.mp3");
 			}
 		}
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 			{
 				if (GetClientTeam(i) == CS_TEAM_T)
 				{
@@ -158,7 +158,7 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 	int alive;
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i))
+		if (IsValidClient(i))
 		{
 			SetClientSpeed(i, 1.0);
 			SetEntityGravity(i, 1.0);
@@ -173,7 +173,7 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 		PrintToChatAll("\x01[\x02%s\x01] \x03Охотники Проиграли, они не сумели убить всех кур", g_cGameName);
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 			{
 				if (GetClientTeam(i) == CS_TEAM_CT)
 					ForcePlayerSuicide(i);

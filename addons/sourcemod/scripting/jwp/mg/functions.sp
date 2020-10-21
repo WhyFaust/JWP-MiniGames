@@ -152,7 +152,7 @@ void ForceFirstPersonToAll()
 	/* Force first person for all players Necessary! */ 
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i))
+		if (IsValidClient(i))
 		{
 			TiB_SetThirdPerson(i, false);
 		}
@@ -161,7 +161,7 @@ void ForceFirstPersonToAll()
 
 void RegenAmmo(int client)
 {
-	if (client && IsClientInGame(client) && !IsFakeClient(client))
+	if (IsValidClient(client))
 	{
 		int weapon = GetEntDataEnt2(client, g_iActiveWeaponOffset);
 		int ammotype = GetEntData(weapon, g_iPrimaryAmmoTypeOffset);

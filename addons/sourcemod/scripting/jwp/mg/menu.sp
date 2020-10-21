@@ -96,7 +96,7 @@ public int g_PropsMenu_Callback(Menu menu, MenuAction action, int param1, int pa
 	{
 		if (g_iGameMode == 1)
 		{
-			if (param1 && IsClientInGame(param1))
+			if (IsValidClient(param1))
 			{
 				if (JWP_IsFlood(param1, 2)) return;
 				char path[PLATFORM_MAX_PATH], name[32];
@@ -136,7 +136,7 @@ public bool OnFuncDisplay(int client, char[] buffer, int maxlength, int style)
 
 public bool OnFuncSelect(int client)
 {
-	if (client && IsClientInGame(client) && JWP_IsWarden(client))
+	if (IsValidClient(client) && JWP_IsWarden(client))
 	{
 		g_MainMenu.Display(client, MENU_TIME_FOREVER);
 		

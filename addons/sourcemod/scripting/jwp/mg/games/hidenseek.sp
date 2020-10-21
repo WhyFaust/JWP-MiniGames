@@ -19,7 +19,7 @@ void ProcessHidenSeek()
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			g_iMaxMasks[i] = 0; // Reset max masks
 			if (GetClientTeam(i) == CS_TEAM_T)
@@ -51,7 +51,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				pl_count++;
 		}
 		
@@ -62,7 +62,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 			
 			for (int i = 1; i <= MaxClients; ++i)
 			{
-				if (IsClientInGame(i))
+				if (IsValidClient(i))
 				{
 					SetClientSpeed(i, 1.0); // return speed to normal
 				}
@@ -80,7 +80,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i) && GetClientTeam(i) == CS_TEAM_CT)
+		if (IsValidClient(i, _, false) && GetClientTeam(i) == CS_TEAM_CT)
 		{
 			ScreenFade(i, 10, FFADE_OUT|FFADE_PURGE, -1, 0, 0, 0, 0);
 			TeleportEntity(i, NULL_VECTOR, NULL_VECTOR, NULL_VELOCITY);
@@ -112,7 +112,7 @@ public Action HideGlobalTimer_Callback(Handle timer)
 	int alive;
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i) && GetClientTeam(i) == CS_TEAM_T)
+		if (IsValidClient(i, _, false) && GetClientTeam(i) == CS_TEAM_T)
 			alive++;
 	}
 	

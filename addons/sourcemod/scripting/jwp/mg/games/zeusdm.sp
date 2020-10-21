@@ -17,7 +17,7 @@ public Action Timer_ProcessZeusDM(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 			{
 				RemoveAllWeapons(i);
 				pl_count++;
@@ -39,7 +39,7 @@ public Action Timer_ProcessZeusDM(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			SetEntityHealth(i, 100);
 			SetClientSpeed(i, 1.0);
@@ -66,7 +66,7 @@ public Action ZeusDmGlobalTimer_Callback(Handle timer)
 		int alive;
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				alive++;
 		}
 		
@@ -85,7 +85,7 @@ public Action ZeusDmGlobalTimer_Callback(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			ForcePlayerSuicide(i);
 		}

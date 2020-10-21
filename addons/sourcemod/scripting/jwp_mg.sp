@@ -91,7 +91,7 @@ public void OnPluginStart()
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i))
+		if (IsValidClient(i))
 			OnClientPutInServer(i);
 	}
 	
@@ -147,7 +147,7 @@ public void OnMapStart()
 
 public Action Command_Mask(int client, int args)
 {
-	if (client && IsClientInGame(client))
+	if (IsValidClient(client))
 	{
 		if (g_iGameMode != hidenseek)
 		{
@@ -178,7 +178,7 @@ public Action Command_Mask(int client, int args)
 
 public Action Command_Whistle(int client, int args)
 {
-	if (client && IsClientInGame(client))
+	if (IsValidClient(client))
 	{
 		if (g_iGameMode != hidenseek && g_iGameMode != chickenhunt)
 		{
@@ -219,7 +219,7 @@ public Action Listener_LRCommand(int client, int args)
 	{
 		if (g_iBlockLR)
 		{
-			if (client && IsClientInGame(client))
+			if (IsValidClient(client))
 			{
 				ReplyToCommand(client, "LR недоступен во время миниигр");
 				return Plugin_Stop;
@@ -234,4 +234,13 @@ public void OnPluginEnd()
 	JWP_RemoveFromMainMenu();
 	if (g_MainMenu != null)
 		delete g_MainMenu;
+}
+
+bool IsValidClient(int iClient, bool bAllowBots = false, bool bAllowDead = true)
+{
+    if (!(1 <= iClient <= MaxClients) || !IsClientInGame(iClient) || (IsFakeClient(iClient) && !bAllowBots) || IsClientSourceTV(iClient) || IsClientReplay(iClient) || (!bAllowDead && !IsPlayerAlive(iClient)))
+    {
+        return false;
+    }
+    return true;
 }

@@ -30,7 +30,7 @@ void ProcessCatchnFree()
 		if (g_hCatchedTimer[i] != null)
 			delete g_hCatchedTimer[i];
 		
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			if (GetClientTeam(i) == CS_TEAM_T)
 				SetClientSpeed(i, g_flTSpeed);
@@ -55,7 +55,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				pl_count++;
 		}
 		
@@ -64,7 +64,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
 			for (int i = 1; i <= MaxClients; ++i)
 			{
-				if (IsClientInGame(i))
+				if (IsValidClient(i))
 				{
 					SetClientSpeed(i, 1.0);
 				}
@@ -85,7 +85,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i) && GetClientTeam(i) == CS_TEAM_CT)
+			if (IsValidClient(i, _, false) && GetClientTeam(i) == CS_TEAM_CT)
 			{
 				TeleportEntity(i, NULL_VECTOR, NULL_VECTOR, NULL_VELOCITY);
 				SetEntityMoveType(i, MOVETYPE_WALK);
@@ -105,7 +105,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 	int allTCount = 0, freezedTCount = 0;
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			if (GetClientTeam(i) == CS_TEAM_T)
 			{
@@ -126,7 +126,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 		g_hCtTimer = null;
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i))
+			if (IsValidClient(i))
 			{
 				SetClientSpeed(i, 1.0);
 			}
@@ -146,7 +146,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 	PrintToChatAll("\x01[\x02%s\x01] \x03Надзиратели проиграли, не успели всех заморозить", g_cGameName);
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i))
+		if (IsValidClient(i))
 		{
 			SetClientSpeed(i, 1.0);
 		}
@@ -159,7 +159,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 
 public Action Timer_CatchnFreeDelay(Handle timer, any client)
 {
-	if (client && IsClientInGame(client))
+	if (IsValidClient(client))
 		PrintToChat(client, "\x01[\x02JWP|MG\x01] \x03Вас уже можно разморозить");
 	
 	g_hCatchedTimer[client] = null;

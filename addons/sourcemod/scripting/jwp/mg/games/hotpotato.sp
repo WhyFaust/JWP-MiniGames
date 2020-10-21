@@ -23,7 +23,7 @@ public Action Timer_ProcessHotPotatoStart(Handle timer)
 	{
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 				pl_count++;
 		}
 		
@@ -42,7 +42,7 @@ public Action Timer_ProcessHotPotatoStart(Handle timer)
 	
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			RemoveAllWeapons(i);
 		}
@@ -65,7 +65,7 @@ public Action FindNewEnemyTimer_Callback(Handle timer)
 	int iLastalive;
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			alive++;
 			iLastalive = i;
@@ -93,7 +93,7 @@ public Action FindNewEnemyTimer_Callback(Handle timer)
 	else
 	{
 		// kill last potato client and start game again
-		if (g_iLastPotatoClient > 0 && IsClientInGame(g_iLastPotatoClient))
+		if (g_iLastPotatoClient > 0 && IsValidClient(g_iLastPotatoClient))
 		{
 			if (IsValidEntity(g_iEntityPotato) && RemovePlayerItem(g_iLastPotatoClient, g_iEntityPotato))
 				g_iEntityPotato = -1;

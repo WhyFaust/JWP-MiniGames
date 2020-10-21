@@ -81,7 +81,7 @@ public void Event_OnRoundStart(Event event, const char[] name, bool silent)
 		
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 			{
 				if (p_rules != null)
 					p_rules.Send(i, pRules_Callback, 20);
@@ -127,7 +127,7 @@ public void Event_OnRoundStart(Event event, const char[] name, bool silent)
 			
 			for (int i = 1; i <= MaxClients; ++i)
 			{
-				if (IsClientInGame(i))
+				if (IsValidClient(i))
 				{
 					if(g_bIsCSGO)
 					{ 
@@ -214,7 +214,7 @@ public void Event_OnRoundEnd(Event event, const char[] name, bool silent)
 		
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i) && IsPlayerAlive(i))
+			if (IsValidClient(i, _, false))
 			{
 				SetEntData(i, g_CollisionGroupOffset, 5, 4, true);
 				SetClientSpeed(i, 1.0);
@@ -252,7 +252,7 @@ public Action OnPlayerRunCmd(int client, int &buttons, int &impulse, float vel[3
 {
 	if (g_iGameMode == hidenseek || g_iGameMode == chickenhunt)
 	{
-		if (client && IsClientInGame(client) && GetClientTeam(client) == CS_TEAM_T)
+		if (IsValidClient(client) && GetClientTeam(client) == CS_TEAM_T)
 		{
 			if (buttons & IN_ATTACK)
 				buttons &= ~IN_ATTACK;
@@ -268,7 +268,7 @@ public Action Event_OnPlayerDeath(Event event, const char[] name, bool silent)
 	int iLastAlive = -1;
 	for (int i = 1; i <= MaxClients; ++i)
 	{
-		if (IsClientInGame(i) && IsPlayerAlive(i))
+		if (IsValidClient(i, _, false))
 		{
 			if (GetClientTeam(i) == CS_TEAM_CT)
 				alive_ct++;
@@ -339,12 +339,12 @@ public Action Event_OnPlayerHurt(Event event, const char[] name, bool silent)
 	if (g_iGameMode == zombiemod)
 	{
 		int attacker = GetClientOfUserId(event.GetInt("attacker"));
-		if (!attacker || !IsClientInGame(attacker) || gZombie_IsZombie[attacker])
+		if (!IsValidClient(attacker) || gZombie_IsZombie[attacker])
 			return Plugin_Continue;
 		
 		int client = GetClientOfUserId(event.GetInt("userid"));
 		
-		if (!client || !IsClientInGame(client) || !gZombie_IsZombie[client])
+		if (!IsValidClient(client) || !gZombie_IsZombie[client])
 			return Plugin_Continue;
 		
 		
@@ -386,7 +386,7 @@ public Action Event_OnWeaponFire(Event event, const char[] name, bool silent)
 	{
 		int client = GetClientOfUserId(event.GetInt("userid"));
 		
-		if (!client || !IsClientInGame(client) || IsFakeClient(client) || GetClientTeam(client) != CS_TEAM_CT)
+		if (!IsValidClient(client) || GetClientTeam(client) != CS_TEAM_CT)
 			return Plugin_Continue;
 		RegenAmmo(client);
 	}
@@ -414,7 +414,7 @@ public Action Event_OnWeaponFire(Event event, const char[] name, bool silent)
 	}
 	if (g_iGameMode == zeusdm)
 	{
-		if (client && IsClientInGame(client) && IsPlayerAlive(client))
+		if (IsValidClient(client, _, false))
 		{
 			char cWeapon[32];
 			event.GetString("weapon", cWeapon, sizeof(cWeapon));
@@ -463,67 +463,64 @@ public bool KnockbackTRFilter(int entity, int contentsMask)
 
 public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype)
 {
-	if (attacker && attacker <= MaxClients && IsClientInGame(attacker))
+	if (IsValidClient(attacker) && IsValidClient(victim))
 	{
-		if (victim && victim <= MaxClients && IsClientInGame(victim))
-		{
-			if (g_iGameMode == zombiemod)
-			{
-				if (gZombie_IsZombie[attacker] && GetTeamClientCount(CS_TEAM_CT) > 1)
-				{
-					if (gZombie_IsZombie[victim])
-						return Plugin_Handled;
-					else
-						InfectPlayer(victim, false);
-				}
-				else return Plugin_Continue;
-			}
-			else if (g_iGameMode == hotpotato)
-			{
-				return Plugin_Handled;
-			}
-			else if (g_iGameMode == hidenseek || g_iGameMode == chickenhunt)
-			{
-				if (GetClientTeam(attacker) == CS_TEAM_T) return Plugin_Handled;
-			}
-			else if (g_iGameMode == catchnfree)
-			{
-				if (GetClientTeam(attacker) == CS_TEAM_T)
-				{
-					if (g_hCatchedTimer[victim] == null && GetClientTeam(victim) == CS_TEAM_T && g_bCatched[victim])
-					{
-						g_bCatched[victim] = false;
-						GiveWpn(victim, "weapon_knife");
-					}
-				}
-				else
-				{
-					if (g_hCatchedTimer[victim] == null && GetClientTeam(victim) == CS_TEAM_T && g_bCatched[victim] == false)
-					{
-						g_bCatched[victim] = true;
-						g_hCatchedTimer[victim] = CreateTimer(g_flCatchDelay, Timer_CatchnFreeDelay, victim);
-						
-						PrintToChat(victim, "\x01[\x02JWP|MG\x01] \x03Вы были заморожены. Вас возможно разморозить через %.1f секунд", g_flCatchDelay);
-						RemoveAllWeapons(victim);
-					}
-				}
-				
-				if (g_bCatched[victim])
-				{
-					SetEntityMoveType(victim, MOVETYPE_NONE);
-				}
-				else
-				{
-					SetEntityMoveType(victim, MOVETYPE_WALK);
-					float fSpeed = g_KvConfig.GetFloat("t_speed", 1.6);
-					if (fSpeed < 1.0) fSpeed = 1.0;
-					SetClientSpeed(victim, fSpeed);
-				}
-				
-				return Plugin_Handled; // and block any damage
-			}
-			// Else other game
-		}
+        if (g_iGameMode == zombiemod)
+        {
+            if (gZombie_IsZombie[attacker] && GetTeamClientCount(CS_TEAM_CT) > 1)
+            {
+                if (gZombie_IsZombie[victim])
+                    return Plugin_Handled;
+                else
+                    InfectPlayer(victim, false);
+            }
+            else return Plugin_Continue;
+        }
+        else if (g_iGameMode == hotpotato)
+        {
+            return Plugin_Handled;
+        }
+        else if (g_iGameMode == hidenseek || g_iGameMode == chickenhunt)
+        {
+            if (GetClientTeam(attacker) == CS_TEAM_T) return Plugin_Handled;
+        }
+        else if (g_iGameMode == catchnfree)
+        {
+            if (GetClientTeam(attacker) == CS_TEAM_T)
+            {
+                if (g_hCatchedTimer[victim] == null && GetClientTeam(victim) == CS_TEAM_T && g_bCatched[victim])
+                {
+                    g_bCatched[victim] = false;
+                    GiveWpn(victim, "weapon_knife");
+                }
+            }
+            else
+            {
+                if (g_hCatchedTimer[victim] == null && GetClientTeam(victim) == CS_TEAM_T && g_bCatched[victim] == false)
+                {
+                    g_bCatched[victim] = true;
+                    g_hCatchedTimer[victim] = CreateTimer(g_flCatchDelay, Timer_CatchnFreeDelay, victim);
+                    
+                    PrintToChat(victim, "\x01[\x02JWP|MG\x01] \x03Вы были заморожены. Вас возможно разморозить через %.1f секунд", g_flCatchDelay);
+                    RemoveAllWeapons(victim);
+                }
+            }
+            
+            if (g_bCatched[victim])
+            {
+                SetEntityMoveType(victim, MOVETYPE_NONE);
+            }
+            else
+            {
+                SetEntityMoveType(victim, MOVETYPE_WALK);
+                float fSpeed = g_KvConfig.GetFloat("t_speed", 1.6);
+                if (fSpeed < 1.0) fSpeed = 1.0;
+                SetClientSpeed(victim, fSpeed);
+            }
+            
+            return Plugin_Handled; // and block any damage
+        }
+        // Else other game
 	}
 	
 	return Plugin_Continue;
