@@ -93,7 +93,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 			}
 		}
 		g_hCtTimer = CreateTimer(1.0, CatchnFreeGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_ALERT", g_iWaitTimerCT);
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_ALERT", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -160,7 +160,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 public Action Timer_CatchnFreeDelay(Handle timer, any client)
 {
 	if (IsValidClient(client))
-		PrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_CAN_DEFROST");
+		CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_CAN_DEFROST");
 	
 	g_hCatchedTimer[client] = null;
 }
