@@ -61,7 +61,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 		
 		if (pl_count < 2)
 		{
-			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
+			PrintCenterTextAll("%t", "JWP_MG_NO_START");
 			for (int i = 1; i <= MaxClients; ++i)
 			{
 				if (IsValidClient(i))
@@ -75,7 +75,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 			return Plugin_Stop;
 		}
 		
-		PrintCenterTextAll("До начала игры %d секунд", g_iWaitTimerT);
+		PrintCenterTextAll("%t", "JWP_MG_START_TIME", g_iWaitTimerT);
 		return Plugin_Continue;
 	}
 	
@@ -93,7 +93,7 @@ public Action Timer_ProcessCatchnFreeStart(Handle timer)
 			}
 		}
 		g_hCtTimer = CreateTimer(1.0, CatchnFreeGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("\x01[\x02%s\x01] \x04Игра ограничена на %d секунд. Надзиратели победят если всех Т заморозят", g_cGameName, g_iWaitTimerCT);
+		PrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_ALERT", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -121,8 +121,8 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 	
 	if (freezedTCount == allTCount)
 	{
-		PrintHintTextToAll("Зеки проиграли!");
-		PrintToChatAll("\x01[\x02%s\x01] \x03Надзиратели победили, успели заморозить всех зеков", g_cGameName);
+		PrintHintTextToAll("%t", "JWP_MG_CATCH_WIN_HINT");
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_WIN_CHAT");
 		g_hCtTimer = null;
 		for (int i = 1; i <= MaxClients; ++i)
 		{
@@ -138,12 +138,12 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 	
 	if (--g_iWaitTimerCT > 0)
 	{
-		PrintHintTextToAll("Игра закончится через %d секунд", g_iWaitTimerCT);
+		PrintHintTextToAll("%t", "JWP_MG_END_TIME", g_iWaitTimerCT);
 		return Plugin_Continue;
 	}
 	
-	PrintHintTextToAll("Зеки победили!");
-	PrintToChatAll("\x01[\x02%s\x01] \x03Надзиратели проиграли, не успели всех заморозить", g_cGameName);
+	PrintHintTextToAll("%t", "JWP_MG_CATCH_LOST_HINT");
+	CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_LOST_CHAT");
 	for (int i = 1; i <= MaxClients; ++i)
 	{
 		if (IsValidClient(i))
@@ -160,7 +160,7 @@ public Action CatchnFreeGlobalTimer_Callback(Handle timer, DataPack dp)
 public Action Timer_CatchnFreeDelay(Handle timer, any client)
 {
 	if (IsValidClient(client))
-		PrintToChat(client, "\x01[\x02JWP|MG\x01] \x03Вас уже можно разморозить");
+		PrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_CATCH_CAN_DEFROST");
 	
 	g_hCatchedTimer[client] = null;
 }

@@ -3,6 +3,7 @@
 #include <sdkhooks>
 #include <cstrike>
 #include <emitsoundany>
+#include <csgocolors>
 
 #undef REQUIRE_PLUGIN
 #include <jwp>
@@ -14,7 +15,7 @@
 // Force 1.7 syntax
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.5"
+#define PLUGIN_VERSION "1.6"
 #define ITEM "mg"
 
 #define LOG_PATH "addons/sourcemod/logs/JWP_MG_Log.log"
@@ -48,11 +49,10 @@ int g_iClipOffset, g_iAmmoOffset, g_iPrimaryAmmoTypeOffset, g_iActiveWeaponOffse
 
 public Plugin myinfo =
 {
-	name = "[JWP] MiniGames",
-	description = "Minigames for Jail Warden Pro",
-	author = "White Wolf, BaFeR",
-	version = PLUGIN_VERSION,
-	url = "http://tibari.ru"
+    name = "[JWP] MiniGames",
+    description = "Minigames for Jail Warden Pro",
+    author = "White Wolf, BaFeR",
+    version = PLUGIN_VERSION
 };
 
 #include "jwp/mg/cvars.sp"
@@ -69,171 +69,175 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	if (GetEngineVersion() == Engine_CSGO)
-		g_bIsCSGO = true;
-	else g_bIsCSGO = false;
-	
-	g_iClipOffset			  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iClip1");
-	g_iPrimaryAmmoTypeOffset  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iPrimaryAmmoType");
-	g_iAmmoOffset			  = UTIL_FindSendPropInfo("CCSPlayer",			"m_iAmmo");
-	g_iActiveWeaponOffset	  = UTIL_FindSendPropInfo("CCSPlayer",			"m_hActiveWeapon");
-	g_CollisionGroupOffset	  = UTIL_FindSendPropInfo("CBaseEntity",		"m_CollisionGroup");
-	g_iToolsVelocity		  = UTIL_FindSendPropInfo("CBasePlayer",		"m_vecVelocity[0]");
+    if (GetEngineVersion() == Engine_CSGO)
+        g_bIsCSGO = true;
+    else g_bIsCSGO = false;
+    
+    g_iClipOffset			  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iClip1");
+    g_iPrimaryAmmoTypeOffset  = UTIL_FindSendPropInfo("CBaseCombatWeapon",	"m_iPrimaryAmmoType");
+    g_iAmmoOffset			  = UTIL_FindSendPropInfo("CCSPlayer",			"m_iAmmo");
+    g_iActiveWeaponOffset	  = UTIL_FindSendPropInfo("CCSPlayer",			"m_hActiveWeapon");
+    g_CollisionGroupOffset	  = UTIL_FindSendPropInfo("CBaseEntity",		"m_CollisionGroup");
+    g_iToolsVelocity		  = UTIL_FindSendPropInfo("CBasePlayer",		"m_vecVelocity[0]");
 
-	CvarInitialization();
-	MenuInitialization();
-	ReadGameModeConfigs();
-	EventsInitialization();
-	
-	RegConsoleCmd("sm_mask", Command_Mask, "Pick up model for hidenseek");
-	RegConsoleCmd("sm_whistle", Command_Whistle, "Whistle for hidenseek or chickenhunt");
-	RegConsoleCmd("sm_lr", Listener_LRCommand); // AddCommandListener not block this command
-	
-	for (int i = 1; i <= MaxClients; ++i)
-	{
-		if (IsValidClient(i))
-			OnClientPutInServer(i);
-	}
-	
-	if (JWP_IsStarted()) JWP_Started();
+    LoadTranslations("jwp_minigames.phrases");
+
+    CvarInitialization();
+    MenuInitialization();
+    ReadGameModeConfigs();
+    EventsInitialization();
+    
+    RegConsoleCmd("sm_mask", Command_Mask, "Pick up model for hidenseek");
+    RegConsoleCmd("sm_whistle", Command_Whistle, "Whistle for hidenseek or chickenhunt");
+    RegConsoleCmd("sm_lr", Listener_LRCommand); // AddCommandListener not block this command
+    
+    for (int i = 1; i <= MaxClients; ++i)
+    {
+        if (IsValidClient(i))
+            OnClientPutInServer(i);
+    }
+    
+    if (JWP_IsStarted()) JWP_Started();
 }
 
 public APLRes AskPluginLoad2(Handle hMyself, bool bLate, char[] sError, int iErr_max) 
 {
-	g_fwdMiniGameStart = CreateGlobalForward("JWP_MG_GameStart", ET_Ignore, Param_Cell);
-	g_fwdMiniGameEnd = CreateGlobalForward("JWP_MG_GameEnd", ET_Ignore, Param_Cell);
-	
-	
-	//CreateNative("JWP_MG_GetGame", Native_JWP_MG_GetGame);
-	
-	RegPluginLibrary("jwp_mg");
+    g_fwdMiniGameStart = CreateGlobalForward("JWP_MG_GameStart", ET_Ignore, Param_Cell);
+    g_fwdMiniGameEnd = CreateGlobalForward("JWP_MG_GameEnd", ET_Ignore, Param_Cell);
+    
+    
+    //CreateNative("JWP_MG_GetGame", Native_JWP_MG_GetGame);
+    
+    RegPluginLibrary("jwp_mg");
 
-	return APLRes_Success; // Для продолжения загрузки плагина нужно вернуть APLRes_Success
+    return APLRes_Success; // Для продолжения загрузки плагина нужно вернуть APLRes_Success
 }
 
 public int Native_JWP_MG_GetGame(Handle plugin, int numParams)
 {
-	return g_iGameMode;
+    return g_iGameMode;
 }
 
 /*
 bool Forward_MiniGameStart()
 {
-	Call_StartForward(g_fwdMiniGameStart);
-	if (Call_Finish(g_iGameMode != -1) != SP_ERROR_NONE)
-		LogToFile(LOG_PATH, "Forward_MiniGameStart error");
-	
-	return g_iGameMode != -1;
+    Call_StartForward(g_fwdMiniGameStart);
+    if (Call_Finish(g_iGameMode != -1) != SP_ERROR_NONE)
+        LogToFile(LOG_PATH, "Forward_MiniGameStart error");
+    
+    return g_iGameMode != -1;
 }*/
 
 public void OnMapStart()
 {
-	if (g_bIsCSGO)
-	{
-		PrecacheModel("models/player/tm_phoenix.mdl");
-		PrecacheModel("models/chicken/chicken.mdl", true);
-	}
-	else
-		PrecacheModel("models/player/t_leet.mdl");
-	
-	g_iGameId = -1;
-	g_iGameMode = -1;
-	g_bIsGameRunning = false;
-	
-	PrecacheMusic();
-	
-	CreateDoorList();
+    if (g_bIsCSGO)
+    {
+        PrecacheModel("models/player/tm_phoenix.mdl");
+        PrecacheModel("models/chicken/chicken.mdl", true);
+    }
+    else
+        PrecacheModel("models/player/t_leet.mdl");
+    
+    g_iGameId = -1;
+    g_iGameMode = -1;
+    g_bIsGameRunning = false;
+    
+    PrecacheMusic();
+    
+    CreateDoorList();
 }
 
 public Action Command_Mask(int client, int args)
 {
-	if (IsValidClient(client))
-	{
-		if (g_iGameMode != hidenseek)
-		{
-			PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только во время пряток.");
-			return Plugin_Handled;
-		}
-		if (GetClientTeam(client) == CS_TEAM_T)
-		{
-			if (IsPlayerAlive(client))
-			{
-				int propLimit = g_KvConfig.GetNum("max_masks", 0);
-				if (propLimit < 0) propLimit = 0;
-				
-				if (!propLimit || g_iMaxMasks[client] < propLimit)
-					g_PropsMenu.Display(client, 20);
-				else
-					PrintToChat(client, "\x01[\x03JWP|MG|Прятки\x01] \x02Вы превысили лимит выбора предметов (%d/%d)", g_iMaxMasks[client], propLimit);
-			}
-			else
-				PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только если вы живы.");
-		}
-		else
-			PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только Террористам");
-	}
-	
-	return Plugin_Handled;
+    if (IsValidClient(client))
+    {
+        if (g_iGameMode != hidenseek)
+        {
+            CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_MASK_NOT_AVAILABLE");
+            return Plugin_Handled;
+        }
+        if (GetClientTeam(client) == CS_TEAM_T)
+        {
+            if (IsPlayerAlive(client))
+            {
+                int propLimit = g_KvConfig.GetNum("max_masks", 0);
+                if (propLimit < 0) propLimit = 0;
+                
+                if (!propLimit || g_iMaxMasks[client] < propLimit)
+                    g_PropsMenu.Display(client, 20);
+                else
+                    CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ITEMS_LIMIT", g_iMaxMasks[client], propLimit);
+            }
+            else
+                CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ONLY_ALIVE");
+        }
+        else
+            CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ONLY_T");
+    }
+    
+    return Plugin_Handled;
 }
 
 public Action Command_Whistle(int client, int args)
 {
-	if (IsValidClient(client))
-	{
-		if (g_iGameMode != hidenseek && g_iGameMode != chickenhunt)
-		{
-			PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только во время пряток или охоты.");
-			return Plugin_Handled;
-		}
-		if (GetClientTeam(client) == CS_TEAM_T)
-		{
-			if (IsPlayerAlive(client))
-			{
-				if (g_hWhistleCooldown[client] == null)
-				{
-					g_hWhistleCooldown[client] = CreateTimer(15.0, WhistleCooldownTimer, client);
-					PrintToChatAll("\x01[\x02JWP|MG\x01] \x03%N курлыкает.", client);
-					EmitSoundToAllAny("tib/curlik.mp3", client);
-				}
-				else
-					PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Курлык недоступен, попробуйте позже (15 с).");
-			}
-			else
-				PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только если вы живы.");
-		}
-		else
-			PrintToChat(client, "\x01[\x02JWP|MG\x01] \x02Данная команда доступна только Террористам");
-	}
-	
-	return Plugin_Handled;
+    if (IsValidClient(client))
+    {
+        if (g_iGameMode != hidenseek && g_iGameMode != chickenhunt)
+        {
+            CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_WHISTLE_NOT_AVAILABLE");
+            return Plugin_Handled;
+        }
+        if (GetClientTeam(client) == CS_TEAM_T)
+        {
+            if (IsPlayerAlive(client))
+            {
+                if (g_hWhistleCooldown[client] == null)
+                {
+                    g_hWhistleCooldown[client] = CreateTimer(15.0, WhistleCooldownTimer, client);
+                    char sName[MAX_NAME_LENGTH];
+                    GetClientName(client, sName, sizeof(sName));
+                    CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_WHISTLE_ALERT", sName);
+                    EmitSoundToAllAny("tib/curlik.mp3", client);
+                }
+                else
+                    CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_WHISTLE_TIME");
+            }
+            else
+                CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ONLY_ALIVE");
+        }
+        else
+            CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ONLY_T");
+    }
+    
+    return Plugin_Handled;
 }
 
 public Action WhistleCooldownTimer(Handle timer, any client)
 {
-	g_hWhistleCooldown[client] = null;
+    g_hWhistleCooldown[client] = null;
 }
 
 public Action Listener_LRCommand(int client, int args)
 {
-	if (g_iGameMode != -1)
-	{
-		if (g_iBlockLR)
-		{
-			if (IsValidClient(client))
-			{
-				ReplyToCommand(client, "LR недоступен во время миниигр");
-				return Plugin_Stop;
-			}
-		}
-	}
-	return Plugin_Continue;
+    if (g_iGameMode != -1)
+    {
+        if (g_iBlockLR)
+        {
+            if (IsValidClient(client))
+            {
+                CReplyToCommand(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_BLOCK_LR");
+                return Plugin_Stop;
+            }
+        }
+    }
+    return Plugin_Continue;
 }
 
 public void OnPluginEnd()
 {
-	JWP_RemoveFromMainMenu();
-	if (g_MainMenu != null)
-		delete g_MainMenu;
+    JWP_RemoveFromMainMenu();
+    if (g_MainMenu != null)
+        delete g_MainMenu;
 }
 
 bool IsValidClient(int iClient, bool bAllowBots = false, bool bAllowDead = true)

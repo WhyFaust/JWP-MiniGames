@@ -27,7 +27,7 @@ void ProcessHidenSeek()
 				TiB_SetThirdPerson(i, true);
 				SetEntityHealth(i, t_health);
 				RemoveAllWeapons(i);
-				PrintToChat(i, "\x01[\x02%s\x01] \x04Пишите !mask чтобы замаскироваться под предмет", g_cGameName);
+				CPrintToChat(i, "%t%t", "JWP_MG_PREFIX", "JWP_MG_HIDENSEEK_ALERT");
 				SetClientSpeed(i, g_flTSpeed);
 				g_PropsMenu.Display(i, 20);
 			}
@@ -58,7 +58,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 		if (pl_count < 2)
 		{
 			ForceFirstPersonToAll();
-			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
+			PrintCenterTextAll("%t", "JWP_MG_NO_START");
 			
 			for (int i = 1; i <= MaxClients; ++i)
 			{
@@ -74,7 +74,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 			return Plugin_Stop;
 		}
 		
-		PrintCenterTextAll("До начала игры %d секунд", g_iWaitTimerT);
+		PrintCenterTextAll("%t", "JWP_MG_START_TIME", g_iWaitTimerT);
 		return Plugin_Continue;
 	}
 	
@@ -92,7 +92,7 @@ public Action Timer_ProcessHideStart(Handle timer)
 	if (g_iWaitTimerCT > 0)
 	{
 		g_hCtTimer = CreateTimer(1.0, HideGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("\x01[\x02%s\x01] \x04Игра ограничена на %d секунд. Если кт не найдут все предметы, то умрут", g_cGameName, g_iWaitTimerCT);
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_HIDENSEEK_RESTRICTION", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -103,7 +103,7 @@ public Action HideGlobalTimer_Callback(Handle timer)
 {
 	if (--g_iWaitTimerCT > 0)
 	{
-		PrintHintTextToAll("Игра закончится через %d секунд", g_iWaitTimerCT);
+		PrintHintTextToAll("%t", "JWP_MG_END_TIME", g_iWaitTimerCT);
 		return Plugin_Continue;
 	}
 	
@@ -118,11 +118,11 @@ public Action HideGlobalTimer_Callback(Handle timer)
 	
 	if (alive > 0)
 	{
-		PrintHintTextToAll("Пропы победили!");
-		PrintToChatAll("\x01[\x02%s\x01] \x03КТ Проиграли, они не сумели найти все пропы", g_cGameName);
+		PrintHintTextToAll("%t", "JWP_MG_HIDENSEEK_PROPS_WIN_HINT");
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_HIDENSEEK_PROPS_WIN_CHAT");
 		for (int i = 1; i <= MaxClients; ++i)
 		{
-			if (IsClientInGame(i))
+			if (IsValidClient(i))
 			{
 				SetClientSpeed(i, 1.0);
 				if (IsPlayerAlive(i) && GetClientTeam(i) == CS_TEAM_CT)
@@ -131,7 +131,7 @@ public Action HideGlobalTimer_Callback(Handle timer)
 		}
 	}
 	else
-		PrintHintTextToAll("Пропы проиграли!");
+		PrintHintTextToAll("%t", "JWP_MG_HIDENSEEK_PROPS_LOST");
 	g_CvarPlayerId.SetInt(0, false, false);
 	
 	g_hCtTimer = null;

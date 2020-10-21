@@ -81,7 +81,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 		if (pl_count < 2)
 		{
 			ForceFirstPersonToAll();
-			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
+			PrintCenterTextAll("%t", "JWP_MG_NO_START");
 			for (int i = 1; i <= MaxClients; ++i)
 			{
 				if (IsValidClient(i))
@@ -96,7 +96,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 			return Plugin_Stop;
 		}
 		
-		PrintCenterTextAll("До начала игры %d секунд", g_iWaitTimerT);
+		PrintCenterTextAll("%t", "JWP_MG_START_TIME", g_iWaitTimerT);
 		return Plugin_Continue;
 	}
 	
@@ -113,7 +113,7 @@ public Action Timer_ProcessChickenHuntStart(Handle timer)
 		}
 		
 		g_hCtTimer = CreateTimer(1.0, ChickenHuntGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("\x01[\x02%s\x01] \x04Игра ограничена на %d секунд. Если охотники не убьют всех куриц, то умрут", g_cGameName, g_iWaitTimerCT);
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CHICKENHUNT_ALERT", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -124,7 +124,7 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 {
 	if (--g_iWaitTimerCT > 0)
 	{
-		PrintHintTextToAll("Игра закончится через %d секунд", g_iWaitTimerCT);
+		PrintHintTextToAll("%t", "JWP_MG_END_TIME", g_iWaitTimerCT);
 		
 		if (g_iWaitTimerCT % 5 == 0)
 		{
@@ -169,8 +169,8 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 	
 	if (alive > 0)
 	{
-		PrintHintTextToAll("Куры победили!");
-		PrintToChatAll("\x01[\x02%s\x01] \x03Охотники Проиграли, они не сумели убить всех кур", g_cGameName);
+		PrintHintTextToAll("%t", "JWP_MG_CHICKENHUNT_WIN_HINT");
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_CHICKENHUNT_WIN_CHAT");
 		for (int i = 1; i <= MaxClients; ++i)
 		{
 			if (IsValidClient(i, _, false))
@@ -181,7 +181,7 @@ public Action ChickenHuntGlobalTimer_Callback(Handle timer)
 		}
 	}
 	else
-		PrintHintTextToAll("Куры проиграли!");
+		PrintHintTextToAll("%t", "JWP_MG_CHICKENHUNT_LOST");
 	
 	g_hCtTimer = null;
 	return Plugin_Stop;

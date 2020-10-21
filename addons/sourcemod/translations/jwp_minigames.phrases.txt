@@ -1,0 +1,264 @@
+"Phrases"
+{
+	"JWP_MG_PREFIX"
+	{
+		"ru" "{NORMAL}[{LIGHTGREEN}JWP|MG{NORMAL}] "
+		"en" "{NORMAL}[{LIGHTGREEN}JWP|MG{NORMAL}] "
+	}
+	"JWP_MG_ONLY_ALIVE"
+	{
+		"ru" "Данная команда доступна только если вы живы"
+		"en" "This command is only available if you are alive"
+	}
+	"JWP_MG_ONLY_T"
+	{
+		"ru" "Данная команда доступна только Террористам"
+		"en" "This command is only available to Terrorists"
+	}
+	"JWP_MG_BLOCK_LR"
+	{
+		"ru" "LR недоступен во время миниигр"
+		"en" "LR is not available during minigames"
+	}
+	"JWP_MG_NO_ACCESS"
+	{
+		"ru" "У вас недостаточно прав поставить эту игру"
+		"en" "You do not have enough rights to put this game"
+	}
+	"JWP_MG_NO_START"
+	{
+		"ru" "Игра не может быть начата. Требуется как минимум 2 игрока"
+		"en" "The game cannot be started. At least 2 players are required"
+	}
+	"JWP_MG_START_TIME"
+	{
+		"#format" "{1:i}"
+		"ru" "До начала игры {1} секунд"
+		"en" "Before the game starts {1} seconds"
+	}
+	"JWP_MG_END_TIME"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра закончится через {1} секунд"
+		"en" "The game will end in {1} seconds."
+	}
+	"JWP_MG_GAME_RULES_TITLE"
+	{
+		"ru" "Правила игры:\n"
+		"en" "Rules of the game:\n"
+	}
+	"JWP_MG_ITEM_OK"
+	{
+		"ru" "ОК"
+		"en" "OK"
+	}
+	"JWP_MG_GAMES_LIST_TITLE"
+	{
+		"ru" "Игровые дни:"
+		"en" "Playing days:"
+	}
+	"JWP_MG_ITEMS_LIMIT"
+	{
+		"#format" "{1:i},{2:i}"
+		"ru" "Вы превысили лимит выбора предметов ({1}/{2})"
+		"en" "You have exceeded the limit for selecting items ({1}/{2})"
+	}
+	"JWP_MG_MASK_NOT_AVAILABLE"
+	{
+		"ru" "Данная команда доступна только во время игры прятки"
+		"en" "This command is only available during the game hide-and-seek"
+	}
+	"JWP_MG_WHISTLE_NOT_AVAILABLE"
+	{
+		"ru" "Данная команда доступна только во время пряток или охоты"
+		"en" "This command is available only during hiding or hunting"
+	}
+	"JWP_MG_WHISTLE_TIME"
+	{
+		"ru" "Курлык недоступен, попробуйте позже (15 с)"
+		"en" "Whistle is not available, try later (15 s)"
+	}
+	"JWP_MG_WHISTLE_ALERT"
+	{
+		"#format" "{1:s}"
+		"ru" "{1} курлыкает"
+		"en" "{1} whistles"
+	}
+	"JWP_MG_POTATO_DISCONNECT"
+	{
+		"#format" "{1:s}"
+		"ru" "{1} последний кто держал картошку отключился, выбор нового игрока..."
+		"en" "{1} the last one who held the potatoes passed out, the choice of a new player..."
+	}
+	"JWP_MG_POTATO_PASSED"
+	{
+		"#format" "{1:s}"
+		"ru" "Вы передали горячую картошку {1}"
+		"en" "You passed the hot potatoes {1}"
+	}
+	"JWP_MG_POTATO_THROWN"
+	{
+		"ru" "Вам кинули горячую картошку(deagle). Передайте её другому..."
+		"en" "You have been thrown a hot potato (deagle). Pass it on to another..."
+	}
+	"JWP_MG_POTATO_THROWN_2"
+	{
+		"ru" "Теперь вы держите горячую картошку(deagle). Передайте её другому..."
+		"en" "Now you keep the hot potatoes (deagle). Pass it on to another..."
+	}
+	"JWP_MG_POTATO_HOLD"
+	{
+		"#format" "{1:s}"
+		"ru" "{1} держит горячую картошку"
+		"en" "{1} holds hot potatoes"
+	}
+	"JWP_MG_POTATO_LAST_DEAD"
+	{
+		"#format" "{1:s}"
+		"ru" "{1} последний кто держал картошку умер"
+		"en" "The last one to hold the potatoes died"
+	}
+	"JWP_MG_POTATO_WIN"
+	{
+		"#format" "{1:s}"
+		"ru" "{1} победил в горячей картошке"
+		"en" "{1} won the hot potatoes"
+	}
+	"JWP_MG_CATCH_ALERT"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра ограничена на {1} секунд. Надзиратели победят если всех Т заморозят"
+		"en" "The game is limited to {1} seconds. The Overlords will win if all T's are frozen"
+	}
+	"JWP_MG_CATCH_WIN_HINT"
+	{
+		"ru" "Зеки проиграли!"
+		"en" "The prisoners lost!"
+	}
+	"JWP_MG_CATCH_WIN_CHAT"
+	{
+		"ru" "Надзиратели победили, успели заморозить всех зеков"
+		"en" "The guards won, managed to freeze all the convicts"
+	}
+	"JWP_MG_CATCH_LOST_HINT"
+	{
+		"ru" "Зеки победили!"
+		"en" "The prisoners won!"
+	}
+	"JWP_MG_CATCH_LOST_CHAT"
+	{
+		"ru" "Надзиратели проиграли, не успели всех заморозить"
+		"en" "The guards lost, didn't have time to freeze everyone."
+	}
+	"JWP_MG_CATCH_TIME_DEFROST"
+	{
+		"#format" "{1:.1f}"
+		"ru" "Вы были заморожены. Вас возможно разморозить через {1} секунд"
+		"en" "You were frozen. You can defrost in {1} seconds."
+	}
+	"JWP_MG_CATCH_CAN_DEFROST"
+	{
+		"ru" "Вас уже можно разморозить"
+		"en" "You can defrost already."
+	}
+	"JWP_MG_HIDENSEEK_ALERT"
+	{
+		"ru" "Пишите !mask чтобы замаскироваться под предмет"
+		"en" "Write !mask to disguise yourself as an object"
+	}
+	"JWP_MG_HIDENSEEK_RESTRICTION"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра ограничена на {1} секунд. Если кт не найдут все предметы, то умрут"
+		"en" "The game is limited to {1} seconds. If all objects are not found, they will die"
+	}
+	"JWP_MG_HIDENSEEK_PROPS_WIN_HINT"
+	{
+		"ru" "Пропы победили!"
+		"en" "The props won!"
+	}
+	"JWP_MG_HIDENSEEK_PROPS_WIN_CHAT"
+	{
+		"ru" "КТ Проиграли, они не сумели найти все пропы"
+		"en" "CT Lost, they couldn't find all props"
+	}
+	"JWP_MG_HIDENSEEK_PROPS_LOST"
+	{
+		"ru" "Пропы проиграли!"
+		"en" "Props lost!"
+	}
+	"JWP_MG_PROPS_LIST_TITLE"
+	{
+		"ru" "Прятки маскировка:"
+		"en" "Cloaking hides:"
+	}
+	"JWP_MG_ZEUSDM_ALERT"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра ограничена на {1} секунд. Это дезматч на тазерах, каждый сам по себе. Но у всех защита на 10 секунд"
+		"en" "The game is limited to {1} seconds. It is a tazer desmatch, each on its own. But everybody has protection for 10 seconds"
+	}
+	"JWP_MG_ZOMBIE_TIME"
+	{
+		"#format" "{1:i}"
+		"ru" "До заражения {1} секунд"
+		"en" "Before infection {1} seconds"
+	}
+	"JWP_MG_ZOMBIE_ALERT"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра ограничена на {1} секунд. Если зомби не успеют заразить, они будут убиты"
+		"en" "The game is limited to {1} seconds. If the zombies do not have time to infect, they will be killed"
+	}
+	"JWP_MG_ZOMBIE_WIN"
+	{
+		"ru" "Зомби победили!"
+		"en" "Zombies won!"
+	}
+	"JWP_MG_ZOMBIE_LOST_HINT"
+	{
+		"ru" "Зомби проиграли!"
+		"en" "Zombies lost!"
+	}
+	"JWP_MG_ZOMBIE_LOST_CHAT"
+	{
+		"ru" "Зомби проиграли!"
+		"en" "Zombies lost!"
+	}
+	"JWP_MG_ZOMBIE_FIRST"
+	{
+		"ru" "Вы первый зомби. Заразите остальных игроков!"
+		"en" "You are the first zombie. Infect the other players!"
+	}
+	"JWP_MG_ZOMBIE_INFECTED"
+	{
+		"ru" "Вас инфецировали, вы Зомби, заразите остальных!"
+		"en" "You have been infected, you are a Zombie, infect the others!"
+	}
+	"JWP_MG_CHICKENHUNT_ALERT"
+	{
+		"#format" "{1:i}"
+		"ru" "Игра ограничена на {1} секунд. Если охотники не убьют всех куриц, то умрут"
+		"en" "The game is limited to {1} seconds. If the hunters do not kill all the chickens, they will die"
+	}
+	"JWP_MG_CHICKENHUNT_WIN_HINT"
+	{
+		"ru" "Куры победили!"
+		"en" "The chickens won!"
+	}
+	"JWP_MG_CHICKENHUNT_WIN_CHAT"
+	{
+		"ru" "Охотники Проиграли, они не сумели убить всех кур"
+		"en" "Hunters Lost, they couldn't kill all the chickens"
+	}
+	"JWP_MG_CHICKENHUNT_LOST"
+	{
+		"ru" "Куры проиграли!"
+		"en" "The chickens lost!"
+	}
+}
+/*** ДОСТУПНЫЕ ЦВЕТА
+{NORMAL}   {DARKRED}   {PINK}
+{GREEN}   {YELLOW}   {LIGHTGREEN}
+{RED}   {GRAY}   {BLUE}
+{DARKBLUE}   {PURPLE} ***/

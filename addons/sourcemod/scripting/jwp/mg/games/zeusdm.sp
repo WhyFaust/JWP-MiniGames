@@ -26,14 +26,14 @@ public Action Timer_ProcessZeusDM(Handle timer)
 		
 		if (pl_count < 2)
 		{
-			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
+			PrintCenterTextAll("%t", "JWP_MG_NO_START");
 			CS_TerminateRound(1.0, CSRoundEnd_Draw);
 			
 			g_hTerTimer = null;
 			return Plugin_Stop;
 		}
 		
-		PrintCenterTextAll("До начала игры %d секунд", g_iWaitTimerT);
+		PrintCenterTextAll("%t", "JWP_MG_START_TIME", g_iWaitTimerT);
 		return Plugin_Continue;
 	}
 	
@@ -52,7 +52,7 @@ public Action Timer_ProcessZeusDM(Handle timer)
 	if (g_iWaitTimerCT > 0)
 	{
 		g_hCtTimer = CreateTimer(1.0, ZeusDmGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("\x01[\x02%s\x01] \x04Игра ограничена на %d секунд. Это дезматч на тазерах, каждый сам по себе. Но у всех защита на 10 секунд", g_cGameName, g_iWaitTimerCT);
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_ZEUSDM_ALERT", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -79,7 +79,7 @@ public Action ZeusDmGlobalTimer_Callback(Handle timer)
 			CS_TerminateRound(1.0, CSRoundEnd_Draw);
 		}
 		
-		PrintHintTextToAll("Игра закончится через %d секунд", g_iWaitTimerCT);
+		PrintHintTextToAll("%t", "JWP_MG_END_TIME", g_iWaitTimerCT);
 		return Plugin_Continue;
 	}
 	

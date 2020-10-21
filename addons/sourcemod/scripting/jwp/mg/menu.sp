@@ -6,12 +6,12 @@ ArrayList g_aRules;
 void MenuInitialization()
 {
 	g_MainMenu = new Menu(g_MainMenu_Callback);
-	g_MainMenu.SetTitle("Игровые дни:");
+	g_MainMenu.SetTitle("%t", "JWP_MG_GAMES_LIST_TITLE");
 	g_MainMenu.ExitButton = true;
 	g_MainMenu.ExitBackButton = true;
 	
 	g_PropsMenu = new Menu(g_PropsMenu_Callback);
-	g_PropsMenu.SetTitle("[JWP|MG] Прятки маскировка:");
+	g_PropsMenu.SetTitle("%t", "JWP_MG_PROPS_LIST_TITLE");
 	
 	g_aRules = new ArrayList(MAX_RULES_SIZE);
 }
@@ -44,7 +44,7 @@ public int g_MainMenu_Callback(Menu menu, MenuAction action, int param1, int par
 						int bitflag = ReadFlagString(cFlags);
 						if (!(GetUserFlagBits(param1) & bitflag || GetUserFlagBits(param1) & ADMFLAG_ROOT))
 						{
-							PrintToChat(param1, "[MG] У вас недостаточно прав поставить эту игру");
+							CPrintToChat(param1, "%t%t", "JWP_MG_PREFIX", "JWP_MG_NO_ACCESS");
 							g_MainMenu.Display(param1, MENU_TIME_FOREVER);
 							return;
 						}
@@ -113,7 +113,7 @@ public int g_PropsMenu_Callback(Menu menu, MenuAction action, int param1, int pa
 				if (!propLimit || g_iMaxMasks[param1] < propLimit)
 					g_PropsMenu.DisplayAt(param1, menu.Selection, 20);
 				else
-					PrintToChat(param1, "\x01[\x03JWP|MG|Прятки\x01] \x02Вы превысили лимит выбора предметов (%d/%d)", g_iMaxMasks[param1], propLimit);
+					CPrintToChat(param1, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ITEMS_LIMIT", g_iMaxMasks[param1], propLimit);
 			}
 		}
 	}

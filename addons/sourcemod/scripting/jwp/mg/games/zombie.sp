@@ -59,14 +59,14 @@ public Action Timer_ProcessZombieStart(Handle timer)
 		
 		if (pl_count < 2)
 		{
-			PrintCenterTextAll("Игра не может быть начата. Требуется как минимум 2 игрока");
+			PrintCenterTextAll("%t", "JWP_MG_NO_START");
 			CS_TerminateRound(1.0, CSRoundEnd_Draw);
 			
 			g_hTerTimer = null;
 			return Plugin_Stop;
 		}
 		
-		PrintCenterTextAll("До заражения %d секунд", g_iWaitTimerT);
+		PrintCenterTextAll("%t", "JWP_MG_ZOMBIE_TIME", g_iWaitTimerT);
 		return Plugin_Continue;
 	}
 	
@@ -96,7 +96,7 @@ public Action Timer_ProcessZombieStart(Handle timer)
 	if (g_iWaitTimerCT > 0)
 	{
 		g_hCtTimer = CreateTimer(1.0, ZombieGlobalTimer_Callback, _, TIMER_REPEAT);
-		PrintToChatAll("\x01[\x02%s\x01] \x04Игра ограничена на %d секунд. Если зомби не успеют заразить, они будут убиты", g_cGameName, g_iWaitTimerCT);
+		PrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_ZOMBIE_ALERT", g_iWaitTimerCT);
 	}
 	
 	g_hTerTimer = null;
@@ -109,7 +109,7 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 	if (--g_iWaitTimerCT > 0)
 	{
 		int pl_count = 0;
-		PrintHintTextToAll("Игра закончится через %d секунд", g_iWaitTimerCT);
+		PrintHintTextToAll("%t", "JWP_MG_END_TIME", g_iWaitTimerCT);
 		
 		for (int i = 1; i <= MaxClients; ++i)
 		{
@@ -119,7 +119,7 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 		
 		if (pl_count == 0)
 		{
-			PrintHintTextToAll("Зомби победили!");
+			PrintHintTextToAll("%t", "JWP_MG_ZOMBIE_WIN");
 			g_hCtTimer = null;
 			return Plugin_Stop;
 		}
@@ -129,8 +129,8 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 	
 	if (GetTeamClientCount(CS_TEAM_CT) > 0)
 	{
-		PrintHintTextToAll("Зомби проиграли!");
-		PrintToChatAll("\x01[\x02ZombieMod\x01] \x03Зомби проиграли, они не успели заразить всех людей");
+		PrintHintTextToAll("%t", "JWP_MG_ZOMBIE_LOST_HINT");
+		CPrintToChatAll("%t%t", "JWP_MG_PREFIX", "JWP_MG_ZOMBIE_LOST_CHAT");
 		for (int i = 1; i <= MaxClients; ++i)
 		{
 			if (IsValidClient(i, _, false) && (GetClientTeam(i) == CS_TEAM_T))
@@ -138,7 +138,7 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 		}
 	}
 	else
-		PrintHintTextToAll("Зомби победили!");
+		PrintHintTextToAll("%t", "JWP_MG_ZOMBIE_WIN");
 	
 	g_hCtTimer = null;
 	return Plugin_Stop;
@@ -152,10 +152,10 @@ void InfectPlayer(int client, bool first_infection = true)
 		if (gZombie_fSpawnCoords[client][0] == 0.0 && gZombie_fSpawnCoords[client][1] == 0.0 && gZombie_fSpawnCoords[client][2] == 0.0)
 			GetClientAbsOrigin(client, gZombie_fSpawnCoords[client]);
 		TeleportEntity(client, gZombie_fSpawnCoords[client], NULL_VECTOR, NULL_VECTOR);
-		PrintToChat(client, "\x01\x03Вы первый \x02зомби\x04. Заразите остальных игроков!");
+		CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ZOMBIE_FIRST");
 	}
 	else
-		PrintToChat(client, "\x01\x03Вас инфецировали, вы \x02Зомби\x04, заразите остальных!");
+		CPrintToChat(client, "%t%t", "JWP_MG_PREFIX", "JWP_MG_ZOMBIE_INFECTED");
 	
 	RemoveAllWeapons(client);
 	GiveWpn(client, "weapon_knife");
