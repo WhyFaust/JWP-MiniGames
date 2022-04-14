@@ -30,12 +30,12 @@ void ProcessZombie()
 		gZombie_Health = 5000;
 	
 	g_KvConfig.GetString("ZombieSkin", gZombie_Model, sizeof(gZombie_Model), "");
-	if (FileExists(gZombie_Model))
+	if (gZombie_Model[0] && FileExists(gZombie_Model, true))
 		PrecacheModel(gZombie_Model);
 	if(g_bIsCSGO)
 	{
 		g_KvConfig.GetString("ZombieArms", gZombie_ModelArms, sizeof(gZombie_ModelArms), "");
-		if (FileExists(gZombie_ModelArms))
+		if (gZombie_ModelArms[0] && FileExists(gZombie_ModelArms, true))
 			PrecacheModel(gZombie_ModelArms);
 	}
 	
@@ -76,7 +76,7 @@ public Action Timer_ProcessZombieStart(Handle timer)
 	{
 		randomCL = JWP_GetRandomTeamClient(CS_TEAM_T, true);
 		if (randomCL != -1)
-			InfectPlayer(randomCL);
+			RequestFrame(InfectPlayerNextFrame, randomCL); //InfectPlayer(randomCL);
 	}
 	
 	for (int i = 1; i <= MaxClients; ++i)
@@ -142,7 +142,12 @@ public Action ZombieGlobalTimer_Callback(Handle timer)
 	
 	g_hCtTimer = null;
 	return Plugin_Stop;
-} 
+}
+
+void InfectPlayerNextFrame(int iClient)
+{
+	InfectPlayer(iClient);
+}
 
 void InfectPlayer(int client, bool first_infection = true)
 {
@@ -161,10 +166,10 @@ void InfectPlayer(int client, bool first_infection = true)
 	GiveWpn(client, "weapon_knife");
 	SetEntityHealth(client, gZombie_Health);
 	
-	if (FileExists(gZombie_Model) && IsModelPrecached(gZombie_Model))
+	if (gZombie_Model[0] && FileExists(gZombie_Model, true) && IsModelPrecached(gZombie_Model))
 		SetEntityModel(client, gZombie_Model);
 	if(g_bIsCSGO)
-		if (FileExists(gZombie_ModelArms) && IsModelPrecached(gZombie_ModelArms))
+		if (gZombie_ModelArms[0] && FileExists(gZombie_ModelArms, true) && IsModelPrecached(gZombie_ModelArms))
 			SetEntPropString(client, Prop_Send, "m_szArmsModel", gZombie_ModelArms);
 	CS_SwitchTeam(client, CS_TEAM_T);
 	
