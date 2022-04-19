@@ -4,6 +4,11 @@ char gHunter_ModelArms[PLATFORM_MAX_PATH];
 
 void ProcessChickenHunt()
 {
+	CreateTimer(3.0, Timer_ProcessChickenHuntDelay);
+}
+
+public Action Timer_ProcessChickenHuntDelay(Handle hTimer)
+{
 	if (g_iWaitTimerT < 10)
 		g_iWaitTimerT = 10;
 	int ct_health = g_KvConfig.GetNum("ct_health", 100);
@@ -62,9 +67,10 @@ void ProcessChickenHunt()
 			}
 		}
 	}
-	
-	
+
 	g_hTerTimer = CreateTimer(1.0, Timer_ProcessChickenHuntStart, _, TIMER_REPEAT);
+
+	return Plugin_Stop;
 }
 
 public Action Timer_ProcessChickenHuntStart(Handle timer)
