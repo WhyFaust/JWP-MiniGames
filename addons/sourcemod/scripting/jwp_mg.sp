@@ -22,7 +22,7 @@
 
 bool g_bIsCSGO;
 
-int g_iGameMode = -1, g_iGameId = -1;
+int g_iGameMode = -1, g_iGameId = -1, g_iLastGame;
 bool g_bIsGameRunning = false;
 
 char g_cGameName[32], g_cGameRules[192], g_cMusicAll[PLATFORM_MAX_PATH];
@@ -90,6 +90,8 @@ public void OnPluginStart()
     RegConsoleCmd("sm_mask", Command_Mask, "Pick up model for hidenseek");
     RegConsoleCmd("sm_whistle", Command_Whistle, "Whistle for hidenseek or chickenhunt");
     RegConsoleCmd("sm_lr", Listener_LRCommand); // AddCommandListener not block this command
+
+    RegConsoleCmd("sm_mg_debug", cmd_hss);
     
     for (int i = 1; i <= MaxClients; ++i)
     {
@@ -98,6 +100,11 @@ public void OnPluginStart()
     }
     
     if (JWP_IsStarted()) JWP_Started();
+}
+
+public Action cmd_hss (int iClient, int iArgs)
+{
+    PrintToChatAll("g_iGameMode = %i, g_iGameId = %i;", g_iGameMode, g_iGameId);
 }
 
 public APLRes AskPluginLoad2(Handle hMyself, bool bLate, char[] sError, int iErr_max) 
